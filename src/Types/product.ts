@@ -26,3 +26,6 @@ export interface modifyProductType{
     index: number,
     update: ProductType
 }
+
+export type ProductListType = "All"| "Clothes" | "Electronics" | "Furniture" | "Shoes" |"Others";
+export type SortType = "None"| "Lowest" | "Highest";

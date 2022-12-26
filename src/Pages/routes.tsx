@@ -1,13 +1,16 @@
 import IconButton from "@mui/material/IconButton";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
-import { toggleThemeMode } from "../../redux/reducers/themeModeReducer";
-import { Box } from "@mui/system";
-import { AppBar, Tab, Tabs, Toolbar, Typography } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../reduxhook/hooks";
+import { toggleThemeMode } from "../redux/reducers/themeModeReducer";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { findAncestor } from "typescript";
-import { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+
 
 export const Routes = () => {
   const mode = useAppSelector((state) => state.themeReducer) as
@@ -20,7 +23,7 @@ export const Routes = () => {
   };
 
   return (
-    <div className="route">
+    <div className="root">
       <AppBar style={{ margin: 0, padding: 0 }}>
         <Toolbar
           sx={{
@@ -28,21 +31,29 @@ export const Routes = () => {
             bgcolor: "background.default",
             color: "text.primary",
             boxShadow: 3,
-            p: 0
+            p: 0,
           }}
         >
-          <Tabs sx={{marginRight: "auto"}} value={0} indicatorColor="secondary">
-            <Tab value={0} label="Home" />
-            <Tab value={1} label="About" />
-          </Tabs>
+          <Typography>
+            <NavLink to="/"> Home </NavLink>
+          </Typography>
+          <Typography sx={{ml: 1}}>
+            <NavLink to="/products"> Products </NavLink>
+          </Typography>
 
-          <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
+          <IconButton sx={{ marginLeft: "auto" }} onClick={toggleTheme}>
             {mode === "dark" ? <ModeNightIcon /> : <LightModeIcon />}
           </IconButton>
           <ShoppingCartIcon />
         </Toolbar>
       </AppBar>
-      <footer></footer>
+
+      <Outlet/>
+
+      <footer>
+
+      </footer>
     </div>
   );
 };
+

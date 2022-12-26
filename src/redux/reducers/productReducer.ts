@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
-import { addProductType, modifyProductType, ProductType } from "../../Types/product";
+import { modifyProductType, ProductType } from "../../Types/product";
 
 const intialstate: ProductType[] = [];
 export const fetchAllProduct = createAsyncThunk("fetchProducts", async () => {

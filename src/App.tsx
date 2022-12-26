@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import { Routes } from "./Pages/routes/routes";
+import { useEffect } from "react";
 import { fetchAllProduct } from "./redux/reducers/productReducer";
 import { useAppDispatch, useAppSelector } from "./reduxhook/hooks";
-import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
-import { Box, CssBaseline } from "@mui/material";
+import { useTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 import { darkTheme } from "./Themes/darkTheme";
 import { lightTheme } from "./Themes/lightTheme";
 import './Styles/app.scss'
-import { url } from "inspector";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/routes";
+
 
 function App() {
   const mode = useAppSelector((state) => state.themeReducer) as
@@ -26,9 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
-      <div className={'app-'+mode}>
-          <Routes />
-      </div>
+      <RouterProvider router={router}/>
     </ThemeProvider>
   );
 }
