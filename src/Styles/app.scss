@@ -1,0 +1,37 @@
+.body-light{
+    background-image: url(..//Images/white-wallpaper.jpg);
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+}
+
+.body-dark{
+    background-image: url(..//Images/black-wallpaper.jpg);
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+
+
+}
+
+.logo_img{
+    background-image: url(..//Images/Logo.png);
+    background-size: cover;
+}
+
+.login_img{
+    background-image: url(../Images/login.png);
+    background-size: cover;
+}
+
+.body-light a{
+    text-decoration: none;
+    color: rgb(8, 8, 8);
+}
+
+.body-dark a{
+    text-decoration: none;
+    color: white;
+}
+
+a.active{
+    color: 	#FF5F1F;
+}
