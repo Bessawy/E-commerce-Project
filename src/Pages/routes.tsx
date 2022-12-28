@@ -6,15 +6,23 @@ import { toggleThemeMode } from "../redux/reducers/themeModeReducer";
 import {
   AppBar,
   Box,
+  ClickAwayListener,
   Divider,
   Grid,
+  Grow,
+  MenuItem,
+  MenuList,
   Paper,
+  Popper,
   Toolbar,
   Typography,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
+import { useEffect, useRef, useState } from "react";
+import { navMenuType } from "../Types/routes";
+import { logUser, userinttialstate } from "../redux/reducers/userReducer";
 
 export const Routes = () => {
   const mode = useAppSelector((state) => state.themeReducer) as
@@ -25,6 +33,43 @@ export const Routes = () => {
   const toggleTheme = () => {
     dispatch(toggleThemeMode());
   };
+
+  const user = useAppSelector((state) => state.userReducer);
+  const anchorRef = useRef<HTMLButtonElement>(null);
+
+  const [menu, setMenu] = useState<navMenuType[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
+  const [logged, setLogged] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const signedinMenu = [{id:2, state: "Sign out", action:  ()=>{
+    dispatch(logUser(userinttialstate));
+    navigate("/");} }];
+  const guestMenu = [
+    {id:0, state: "Sign in", action: ()=>{navigate("/signin")} },
+    {id:1, state: "Sign up", action:  ()=>{navigate("/signup")} },
+  ];
+
+  const handleClose = (event: Event | React.SyntheticEvent) => {
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    if (user.id === 0) {
+      setMenu(guestMenu);
+    } else {
+      setMenu(signedinMenu);
+    }
+  }, [user]);
 
   return (
     <div className="root">
@@ -57,10 +102,70 @@ export const Routes = () => {
           <IconButton>
             <ShoppingCartIcon />
           </IconButton>
-          <IconButton>
-            <Box className="login_img"
-              sx={{ width: 50, height: 50}}></Box>
-          </IconButton>
+
+          <Box
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
+            <IconButton
+              ref={anchorRef}
+              id="composition-button"
+              onClick={() => setOpen((prevOpen) => !prevOpen)}
+              aria-controls={open ? "composition-menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
+              aria-haspopup="true"
+            >
+              { user.avatar ? 
+              <Box component="img"  sx={{ width: 50, height: 50, borderRadius:25}}
+              src={user.avatar}></Box>
+              :<Box className="login_img" sx={{ width: 50, height: 50 }}></Box>}
+              
+            </IconButton>
+            <Popper
+              open={open}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              placement="bottom"
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom-start" ? "left top" : "left bottom",
+                  }}
+                >
+                  <Paper sx={{ marginTop: 1 }}>
+                    <Box borderBottom={1}>
+                      <Typography textAlign="center"> {user.name} </Typography>
+                    </Box>
+                    
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="composition-menu"
+                        aria-labelledby="composition-button"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        {menu.map((item)=>{
+                          return  <MenuItem key={item.state} onClick={()=>{item.action()}}>
+                            <Typography variant="subtitle2">{
+                            item.state}</Typography>
+                            </MenuItem>
+                        })}
+                
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </Box>
         </Toolbar>
       </AppBar>
 
@@ -91,10 +196,10 @@ export const Routes = () => {
                     Account
                   </Box>
                   <Box>
-                    <NavLink to="/"> Login </NavLink>
+                    <NavLink to="/signin"> Login </NavLink>
                   </Box>
                   <Box>
-                    <NavLink to="/"> Register </NavLink>
+                    <NavLink to="/signup"> Register </NavLink>
                   </Box>
                 </Grid>
                 <Grid item xs={4}>
