@@ -17,6 +17,8 @@ import ProductItem from "./product/product";
 import { width } from "@mui/system";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import Typewriter from "react-ts-typewriter";
+import TextField from "@mui/material/TextField";
 
 const imges = [
   "/clothes.jpg",
@@ -25,10 +27,7 @@ const imges = [
   "electronics.jpg",
 ];
 
-const advertise = [
-"laptop.jpg", "razor.jpg"
-
-]
+const advertise = ["laptop.jpg", "razor.jpg"];
 
 const Home = () => {
   const products = useAppSelector((state) => state.productReducer);
@@ -38,7 +37,7 @@ const Home = () => {
     setProductList(products.slice(0, 10));
   }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -49,18 +48,23 @@ const Home = () => {
       }}
     >
       <Swiper className="mySwiper">
-        {advertise.map((item, index)=>{
-          return <SwiperSlide>
-            <Box component="img" key={index} src={item} sx={{width: "100%", height: 450}}>
-            </Box>
-          </SwiperSlide>
+        {advertise.map((item, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <Box
+                component="img"
+                src={item}
+                sx={{ width: "100%", height: 450 }}
+              ></Box>
+            </SwiperSlide>
+          );
         })}
       </Swiper>
-      <Divider sx={{ margin: 5 }} />
+      <Divider sx={{ margin: 2 }} />
       <Grid
         container
         spacing={10}
-        sx={{ height: 500, minWidth: 1000, margin: "auto" }}
+        sx={{ height: 500, minWidth: 1000, marginLeft: "auto" }}
       >
         <Grid item xs={3}>
           <Typography variant="h5" color="#FF5F1F">
@@ -94,14 +98,23 @@ const Home = () => {
           <ImageSlider slides={imges} />
         </Grid>
       </Grid>
-      <Divider sx={{ margin: 10 }} />
+      <Divider sx={{ marginTop: 5, marginBottom: 2 }} />
       <Box>
         <Typography textAlign="center" variant="h5" color="#FF5F1F">
           {" "}
           Most Famous Products
         </Typography>
       </Box>
-      <Box sx={{border: 2, marginTop: 2, boxShadow: 3, borderRadius:10, padding: 2, borderColor:"#FF5F1F" }}>
+      <Box
+        sx={{
+          border: 2,
+          marginTop: 2,
+          boxShadow: 3,
+          borderRadius: 10,
+          padding: 2,
+          borderColor: "#FF5F1F",
+        }}
+      >
         <Swiper
           slidesPerView={3.5}
           spaceBetween={20}
@@ -109,17 +122,39 @@ const Home = () => {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {productList.map((item) => {
+          {productList.map((item, index) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide key={index}>
                 <ProductItem Item={item} />
               </SwiperSlide>
             );
           })}
         </Swiper>
       </Box>
-      <Box sx={{display:"flex", justifyContent: "center", marginTop: 1}}>
-        <Button variant="contained" onClick={()=> navigate("/products")}> Search for more Product</Button>
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+        <Button variant="contained" onClick={() => navigate("/products")}>
+          {" "}
+          Search for more Product
+        </Button>
+      </Box>
+      <Divider sx={{ margin: 3 }} />
+      <Box marginTop={3}>
+        <Typography variant="h5" textAlign="center">
+          Hello! are you interested in knowing more about our
+          <Typography variant="h5" color="#FF5F1F" textAlign="center">
+            <Typewriter
+              text={[" Future Discounts", "New Porducts", "Company News"]}
+              loop={true}
+              delay={2000}
+              random={30}
+              speed={50}
+            />
+          </Typography>
+          Subuscribe to our news
+        </Typography>
+        <Box component="form" sx={{display: "flex", justifyContent:"center", alignItems:"center", marginTop: 2}}>
+          <TextField type="email" variant="filled" placeholder="user@mail.com" sx={{width: 400}}></TextField>
+        </Box>
       </Box>
     </Box>
   );
