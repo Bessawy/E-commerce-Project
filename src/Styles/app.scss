@@ -35,3 +35,18 @@
 a.active{
     color: 	#FF5F1F;
 }
+
+// for arrows
+div.swiper-button-prev,
+div.swiper-button-next {
+color: #FF5F1F;
+}
+
+.swiper-pagination-progressbar-fill {
+    background-color: #FF5F1F !important;
+    border-radius: 5px;
+  }
+  
+  .swiper-pagination-progressbar {
+    background-color: black;
+  }

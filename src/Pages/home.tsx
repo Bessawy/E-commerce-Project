@@ -8,19 +8,22 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import IceSkatingOutlinedIcon from "@mui/icons-material/IceSkatingOutlined";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper";
+
+import { Navigation, Pagination, Scrollbar } from "swiper";
 import { useAppSelector } from "../reduxhook/hooks";
 import { ProductType } from "../Types/product";
 import ProductItem from "./product/product";
-import { width } from "@mui/system";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Typewriter from "react-ts-typewriter";
 import TextField from "@mui/material/TextField";
+import "swiper/css/scrollbar";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
-const imges = [
+
+const images = [
   "/clothes.jpg",
   "/furniture.jpg",
   "shoes.jpg",
@@ -95,7 +98,27 @@ const Home = () => {
           </Typography>
         </Grid>
         <Grid item xs={7}>
-          <ImageSlider slides={imges} />
+          <Swiper
+        pagination={{
+          type: "progressbar",
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
+      >
+            {images.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <Box
+                    component="img"
+                    src={item}
+                    sx={{ width: "100%", height: 380, boxShadow:3, borderRadius: 10 }}
+                  ></Box>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+      
         </Grid>
       </Grid>
       <Divider sx={{ marginTop: 5, marginBottom: 2 }} />
@@ -139,10 +162,10 @@ const Home = () => {
       </Box>
       <Divider sx={{ margin: 3 }} />
       <Box marginTop={3}>
-        <Typography variant="h5" textAlign="center">
+        <Typography variant="h6" textAlign="center">
           Hello! are you interested in knowing more about our
-          <Typography variant="h5" color="#FF5F1F" textAlign="center">
-            <Typewriter
+          <Typography  variant="inherit" color="#FF5F1F" textAlign="center">
+            <Typewriter 
               text={[" Future Discounts", "New Porducts", "Company News"]}
               loop={true}
               delay={2000}
@@ -152,8 +175,21 @@ const Home = () => {
           </Typography>
           Subuscribe to our news
         </Typography>
-        <Box component="form" sx={{display: "flex", justifyContent:"center", alignItems:"center", marginTop: 2}}>
-          <TextField type="email" variant="filled" placeholder="user@mail.com" sx={{width: 400}}></TextField>
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 2,
+          }}
+        >
+          <TextField
+            type="email"
+            variant="filled"
+            placeholder="user@mail.com"
+            sx={{ width: 400 }}
+          ></TextField>
         </Box>
       </Box>
     </Box>
