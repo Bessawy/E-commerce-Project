@@ -27,5 +27,9 @@ export interface modifyProductType{
     update: ProductType
 }
 
+export interface CartType extends ProductType{
+    count: number
+}
+
 export type ProductListType = "All"| "Clothes" | "Electronics" | "Furniture" | "Shoes" |"Others";
 export type SortType = "None"| "Lowest" | "Highest";

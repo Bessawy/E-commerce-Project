@@ -38,7 +38,7 @@ const Home = () => {
 
   useEffect(() => {
     setProductList(products.slice(0, 10));
-  }, []);
+  }, [products]);
 
   const navigate = useNavigate();
 
@@ -169,7 +169,7 @@ const Home = () => {
               text={[" Future Discounts", "New Porducts", "Company News"]}
               loop={true}
               delay={2000}
-              random={30}
+              random={0}
               speed={50}
             />
           </Typography>
