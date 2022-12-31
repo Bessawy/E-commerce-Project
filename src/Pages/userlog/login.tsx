@@ -8,27 +8,30 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { logUser, UserLogin } from "../../redux/reducers/userReducer";
+import { UserLogin } from "../../redux/reducers/userReducer";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
-import { UserType } from "../../Types/user";
 
 const UserForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [open, setOpen] = React.useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [toggle, setToggle] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.userReducer);
 
   const signinHandler = () => {
     const login = async () => {
-      await dispatch(UserLogin({ email: email, password: password }));
-      setToggle(true)
+      await dispatch(UserLogin({ email: email, password: password })).then(
+        (response) => {
+          if("error" in response){
+            setMessage("Error! Your email or password are not correct.")
+            setOpen(true)
+          }
+        }
+      )
     };
     login()
   };
@@ -37,14 +40,8 @@ const UserForm = () => {
   useEffect(() => {
     if (user.name !== "Guest") {
       navigate("/");
-    } else {
-      if (toggle) {
-        setToggle(false);
-        setMessage("Email and Password are not valid");
-        setOpen(true);
-      }
     }
-  }, [user, toggle]);
+  }, [user]);
 
   return (
     <Box

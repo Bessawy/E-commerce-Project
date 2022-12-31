@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUser } from "../../redux/reducers/userReducer";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
-import { newUserAvatar } from "../url";
+import { newUserAvatar } from "../utils";
 
 const UserForm = () => {
 

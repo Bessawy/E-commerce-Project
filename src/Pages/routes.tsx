@@ -22,7 +22,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
 import { navMenuType } from "../Types/routes";
-import { logUser, userinttialstate } from "../redux/reducers/userReducer";
+import { JWTLogin, signOutUser } from "../redux/reducers/userReducer";
 import { StyledBadge } from "../Themes/badgeTheme";
 
 
@@ -39,11 +39,9 @@ export const Routes = () => {
   const user = useAppSelector((state) => state.userReducer);
   const cart = useAppSelector((state) => state.cartReducer);
   const anchorRef = useRef<HTMLButtonElement>(null);
-
   const [cartItems, setCartItems] = useState<number>(0);
   const [menu, setMenu] = useState<navMenuType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [logged, setLogged] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const signedinMenu = [
@@ -51,8 +49,15 @@ export const Routes = () => {
       id: 2,
       state: "Sign out",
       action: () => {
-        dispatch(logUser(userinttialstate));
+        dispatch(signOutUser());
         navigate("/");
+      },
+    },
+    {
+      id: 3,
+      state: "Profile",
+      action: () => {
+        navigate("/profile");
       },
     },
   ];
@@ -87,6 +92,10 @@ export const Routes = () => {
     }
   }
 
+  useEffect(()=>{
+    dispatch(JWTLogin())
+  }, [])
+
   useEffect(() => {
     let count = 0;
     cart.forEach((item) => {
@@ -98,10 +107,8 @@ export const Routes = () => {
   useEffect(() => {
     if (user.id === 0) {
       setMenu(guestMenu);
-      setLogged(false);
     } else {
       setMenu(signedinMenu);
-      setLogged(true);
     }
   }, [user]);
 
@@ -127,7 +134,7 @@ export const Routes = () => {
           <Typography>
             <NavLink to="/"> Home </NavLink>
           </Typography>
-          <Typography sx={{ ml: 1 }}>
+          <Typography sx={{ ml: 2 }}>
             <NavLink to="/products"> Products </NavLink>
           </Typography>
           <IconButton sx={{ marginLeft: "auto" }} onClick={toggleTheme}>
@@ -169,7 +176,7 @@ export const Routes = () => {
             >
               <StyledBadge
                 variant="dot"
-                color={logged ? "success" : "error"}
+                color={user.id ? "success" : "error"}
                 badgeContent=""
               >
                 {user.avatar ? (
@@ -296,4 +303,6 @@ export const Routes = () => {
 function setUseItems(count: number) {
   throw new Error("Function not implemented.");
 }
+
+
 

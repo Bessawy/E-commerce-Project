@@ -7,19 +7,23 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
-import { useAppSelector } from "../../reduxhook/hooks";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 import GridItem from "../../Themes/gridTheme";
 import EuroIcon from "@mui/icons-material/Euro";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { addtoCart, removeFromCart } from "../../redux/reducers/cartReducer";
 
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cartReducer);
+  const dispatch = useAppDispatch()
+
+
 
   return (
     <Box marginTop={20}>
-      {cartItems.map((item) => {
+      {cartItems.map((item, index) => {
         return (
           <Box key={item.id} margin={5}>
             <Grid container spacing={3}>
@@ -56,11 +60,11 @@ const Cart = () => {
                           alignItems: "center",
                         }}
                       >
-                        <IconButton>
+                        <IconButton  onClick={()=>{dispatch(removeFromCart(index))}}>
                           <RemoveIcon />
                         </IconButton>
                         <Typography variant="h6"> {item.count}</Typography>
-                        <IconButton>
+                        <IconButton onClick={()=>{dispatch(addtoCart(item))}}>
                           <AddIcon />
                         </IconButton>
                       </Box>
@@ -98,7 +102,7 @@ const Cart = () => {
             color="secondary"
           >
             {
-              cartItems.reduce(function(acc, item){ return acc + item.price}, 0)
+              cartItems.reduce(function(acc, item){ return acc + item.price*item.count}, 0)
             } <EuroIcon sx={{ fontSize: 12 }} />
           </Typography>
         </GridItem>

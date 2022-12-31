@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
-import { modifyProductType, ProductType } from "../../Types/product";
+import { modifyProductType, ProductCreateType, ProductType } from "../../Types/product";
 
 const intialstate: ProductType[] = [];
 export const fetchAllProduct = createAsyncThunk("fetchProducts", async () => {
   try {
     const response = await axios.get(
       "https://api.escuelajs.co/api/v1/products"
-    )
+    );
     const data = await response.data;
     return data;
   } catch (e: any) {
@@ -15,15 +15,58 @@ export const fetchAllProduct = createAsyncThunk("fetchProducts", async () => {
   }
 });
 
-export const addProduct = createAsyncThunk(
+export const addProductServer = createAsyncThunk(
   "addProduct",
-  async (product: ProductType) => {
+  async (product: ProductCreateType, { dispatch }) => {
     try {
       const response: AxiosResponse<ProductType, ProductType> =
-        await axios.post("https://api.escuelajs.co/api/v1/products/", product);
+        await axios.post("https://api.escuelajs.co/api/v1/products/", 
+        {
+          "title": product.title,
+          "price": product.price,
+          "description": product.description,
+          "categoryId": product.categoryId,
+          "images": product.images
+        });
+    
+      return response.data
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+  }
+);
+
+export const updateItemServer = createAsyncThunk(
+  "modifyProduct",
+  async (Item: ProductType, { dispatch }) => {
+    try {
+      const response = await axios.put(
+        "https://api.escuelajs.co/api/v1/products/" + Item.id,
+        {
+          title: Item.title,
+          price: Item.price,
+          description: Item.description,
+        }
+      );
+      const data = response.data;
+      dispatch(modifyItem({update: data}))
+      return data
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+  }
+);
+
+export const deleteItemServer = createAsyncThunk(
+  "deleteProduct",
+  async (id: number, { dispatch }) => {
+    try {
+      const response = await axios.delete(
+        "https://api.escuelajs.co/api/v1/products/" + id
+      );
+      dispatch(deleteItem(id));
       return response.data;
     } catch (e: any) {
-
       throw new Error(e.message);
     }
   }
@@ -36,11 +79,21 @@ const productSlice = createSlice({
     addItems: (state, action) => {
       return action.payload;
     },
+    pushItem: (state, action: PayloadAction<ProductType>) => {
+      state.push(action.payload);
+    },
     deleteItem: (state, action: PayloadAction<number>) => {
       return state.filter((item) => item.id !== action.payload);
     },
     modifyItem: (state, action: PayloadAction<modifyProductType>) => {
-      state[action.payload.index] = action.payload.update;
+      if (action.payload.index) {
+        state[action.payload.index] = action.payload.update;
+      } else {
+        const index = state.findIndex(
+          (item) => item.id === action.payload.update.id
+        );
+        state[index] = action.payload.update;
+      }
     },
     sortProducts: (state, action: PayloadAction<"asc" | "desc">) => {
       if (action.payload === "asc") {
@@ -67,16 +120,27 @@ const productSlice = createSlice({
       console.log("Data is loading....");
       return state;
     });
-    build.addCase(addProduct.fulfilled, (state, action) => {
+    build.addCase(addProductServer.fulfilled, (state, action) => {
       if (action.payload) {
-        return state.push(action.payload);
+        state.push(action.payload);
       } else {
         return state;
       }
     });
+    build.addCase(
+      updateItemServer.fulfilled,
+      (state: ProductType[], action) => {
+        const index = state.findIndex((item) => item.id === action.payload.id);
+        state[index] = action.payload;
+      }
+    );
   },
 });
 
 const productReducer = productSlice.reducer;
-export const { deleteItem } = productSlice.actions;
+export const { deleteItem, modifyItem } = productSlice.actions;
 export default productReducer;
+function pushItem(data: ProductType): any {
+  throw new Error("Function not implemented.");
+}
+

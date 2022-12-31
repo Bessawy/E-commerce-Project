@@ -13,6 +13,7 @@ import EuroIcon from "@mui/icons-material/Euro";
 import InfoIcon from "@mui/icons-material/Info";
 import { useAppDispatch } from "../../reduxhook/hooks";
 import { addtoCart } from "../../redux/reducers/cartReducer";
+import { useNavigate } from "react-router-dom";
 
 const Image = (props: { img: string }) => {
   return (
@@ -32,6 +33,7 @@ const Image = (props: { img: string }) => {
 
 const ProductItem = (props: { Item: ProductType }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <Paper sx={{ width: 320, marginTop: 1 }} elevation={24}>
       <Typography align="center" padding={1}>
@@ -94,12 +96,20 @@ const ProductItem = (props: { Item: ProductType }) => {
           alignItems="center"
           display="flex"
         >
-          <IconButton>
+          <IconButton
+            onClick={() =>
+              navigate("/products/" + props.Item.id, {
+                state: props.Item,
+              })
+            }
+          >
             <InfoIcon />
           </IconButton>
         </Grid>
       </Grid>
     </Paper>
+
+    
   );
 };
 

@@ -26,7 +26,7 @@ import {
   scrollUp,
   sortOptions,
 } from "./product_utils";
-
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const products: ProductType[] = useAppSelector(
@@ -42,6 +42,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const pages_no = getPagesNo(productList.length, ItemsInPage);
+  const navigate = useNavigate()
 
   const filterItemsHandler = () => {
     setCurrentPage(1);
@@ -161,7 +162,9 @@ const Products = () => {
           type="button"
           aria-label="NavLeft"
           disabled={currentPage - 1 < 1}
-          onClick={(e) => {setCurrentPage(currentPage - 1)}}
+          onClick={(e) => {
+            setCurrentPage(currentPage - 1);
+          }}
         >
           <NavigateBeforeIcon />
         </IconButton>
@@ -170,7 +173,7 @@ const Products = () => {
           variant="pages"
           disabled={currentPage - 1 < 1}
           onClick={(e) => {
-            setCurrentPage(currentPage - 1)
+            setCurrentPage(currentPage - 1);
           }}
         >
           {currentPage - 1}
@@ -201,6 +204,20 @@ const Products = () => {
           <NavigateNextIcon />
         </IconButton>
       </Paper>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          ml: 10,
+          mr: 10,
+          mt: 1,
+        }}
+      >
+        <Button variant="outlined" onClick={()=>navigate("/createproduct")}>
+          <Typography sx={{ color: "#ff5f1f" }}>Creat new product</Typography>
+        </Button>
+      </Box>
     </Container>
   );
 };
