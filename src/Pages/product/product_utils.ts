@@ -27,6 +27,53 @@ export const productOptions = [
   },
 ];
 
+export const createproductOptions = [
+  {
+    value: "Clothes",
+    id: 1,
+  },
+  {
+    value: "Electronics",
+    id: 2,
+  },
+  {
+    value: "Furniture",
+    id: 3,
+  },
+  {
+    value: "Shoes",
+    id: 4,
+  },
+  {
+    value: "Others",
+    id: 5,
+  },
+];
+
+export const categoryOptions = [
+  {
+    value: "Clothes",
+    id: 1,
+  },
+  {
+    value: "Electronics",
+    id: 2,
+  },
+  {
+    value: "Furniture",
+    id: 3,
+  },
+  {
+    value: "Shoes",
+    id: 4,
+  },
+  {
+    value: "Others",
+    id: 5,
+  },
+];
+
+
 export const sortOptions = [
   {
     value: "None",
@@ -61,7 +108,6 @@ export const settings = {
 export const getPagesNo = (total: number, each: number) =>{
   return Math.ceil(total/each)
 }
-
 
 export const scrollUp = () =>{
   window.scrollTo({
