@@ -12,21 +12,6 @@ export const userinttialstate: UserType = {
   avatar: "",
 };
 
-export const modifyUserData = createAsyncThunk(
-  "modifyUserData",
-  async (tomodify: UserOptionalType) => {
-    try {
-      const user = useAppSelector((state) => state.userReducer);
-      const userURL = "https://api.escuelajs.co/api/v1/users/" + user.id;
-      const response = await axios.put(userURL, tomodify);
-      const data = await response.data;
-      return data;
-    } catch (e) {
-      throw new Error("Cannot modify user");
-    }
-  }
-);
-
 export const createUser = createAsyncThunk(
   "addUser",
   async (user: CreateUserType) => {
@@ -66,7 +51,7 @@ export const UserLogin = createAsyncThunk(
       );
       const data = await response.data;
       localStorage.setItem("JWT", data.access_token);
-      dispatch(JWTLogin());
+      await dispatch(JWTLogin());
     } catch (e) {
       throw new Error("Login failed");
     }
@@ -86,9 +71,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (build) => {
-    build.addCase(modifyUserData.fulfilled, (state, action) => {
-      return action.payload;
-    });
     build.addCase(createUser.fulfilled, (state, action) => {
       return action.payload;
     });

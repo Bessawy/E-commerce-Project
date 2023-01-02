@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "@testing-library/react";
 import { CartType, ProductType } from "../../Types/product";
 
 const initalstate: CartType[] = [];
@@ -16,9 +15,6 @@ const cartSlice = createSlice({
         state[indx].count += 1;
       }
     },
-    deleteItemCart: (state, action: PayloadAction<number>) => {
-      state.splice(action.payload);
-    },
     removeFromCart: (state, action: PayloadAction<number>) => {
       if (state[action.payload].count > 1) {
         state[action.payload].count -= 1;
@@ -30,5 +26,5 @@ const cartSlice = createSlice({
 });
 
 const cartReducer = cartSlice.reducer;
-export const { addtoCart, deleteItemCart, removeFromCart } = cartSlice.actions;
+export const { addtoCart, removeFromCart } = cartSlice.actions;
 export default cartReducer;

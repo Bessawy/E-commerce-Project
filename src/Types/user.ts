@@ -16,7 +16,6 @@ export interface CreateUserType{
     avatar: URL
 }
 
-
 export interface UserOptionalType{
     avatar?: string
     id?: number,

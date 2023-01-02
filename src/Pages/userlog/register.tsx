@@ -17,16 +17,15 @@ import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 import { newUserAvatar } from "../utils";
 
 const UserForm = () => {
-
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [msgStatus, setmsgStatus] = useState<"error" | "success">("success");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.userReducer)
+  const user = useAppSelector((state) => state.userReducer);
 
   const createAccount = () => {
     if (password.length < 5) {
@@ -41,15 +40,21 @@ const UserForm = () => {
           name: name,
           avatar: new URL(newUserAvatar),
         })
-      );
+      ).then((res) => {
+        if ("error" in res) {
+          setMessage("Data entered is invalid!");
+          setmsgStatus("error");
+          setOpen(true);
+        }
+      });
     }
   };
 
-  useEffect(()=>{
-    if(user.name !== "Guest"){
-      navigate('/')
+  useEffect(() => {
+    if (user.name !== "Guest") {
+      navigate("/");
     }
-  },[user])
+  }, [user]);
 
   return (
     <Box
@@ -130,17 +135,43 @@ const UserForm = () => {
             alignItems: "center",
             display: "flex",
             flexDirection: "column",
-            marginTop: 7,
+            marginTop: 5,
             marginBottom: 5,
           }}
         >
-          <Button variant="contained" onClick={() => createAccount()}>
+          <Button
+            variant="contained"
+            type="submit"
+            onClick={() => createAccount()}
+          >
             Create Account
           </Button>
           <Typography variant="caption" marginTop={2} color="#FF5F1F">
             {" "}
             By continuing, I agree to Amr’s Privacy Policy and Terms of Use.
           </Typography>
+        </Box>
+
+        <Divider sx={{ pl: 4, pr: 4 }}>
+          {" "}
+          <Typography variant="caption">
+            already have an account
+          </Typography>{" "}
+        </Divider>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{ margin: 1, width: 100 }}
+            onClick={() => navigate("/signin")}
+          >
+            Sign in
+          </Button>
         </Box>
       </Paper>
       <Snackbar
