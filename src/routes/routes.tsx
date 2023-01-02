@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import Cart from "../Pages/cart/Cart";
 import Home from "../Pages/home";
+import Notfound from "../Pages/notfound";
 import Createproduct from "../Pages/product/createproduct";
 import Products from "../Pages/product/products";
 import ProductInfo from "../Pages/product/product_info";
@@ -42,6 +44,10 @@ const router = createBrowserRouter([
             <Profile />
           </ProtectRoutes>
         ),
+      },
+      {
+        path: "*",
+        element: <Notfound />,
       },
     ],
   },

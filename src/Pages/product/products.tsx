@@ -38,11 +38,12 @@ const Products = () => {
   const [list, setList] = useState<ProductListType>("All");
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<string>("None");
+  const [sortTitle, setSortTittle] = useState<"asc" | "desc" | "none">("none");
   const [productList, setProductList] = useState<ProductType[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const pages_no = getPagesNo(productList.length, ItemsInPage);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const filterItemsHandler = () => {
     setCurrentPage(1);
@@ -50,6 +51,13 @@ const Products = () => {
     let productSearch = products.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase())
     );
+
+    if(sortTitle === 'asc'){
+      productSearch = productSearch.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    else if(sortTitle === 'desc'){
+      productSearch = productSearch.sort((a, b) => b.title.localeCompare(a.title));
+    }
 
     if (sort === "Lowest") {
       productSearch = productSearch.sort((a, b) => a.price - b.price);
@@ -88,12 +96,30 @@ const Products = () => {
           style={{ width: 120 }}
           label="Sort"
           defaultValue="None"
-          helperText="Sort products"
+          helperText="Sort by price"
           onChange={(e) => setSort(e.target.value as SortType)}
         >
           {sortOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.value}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="products__sort-title"
+          select
+          size="small"
+          style={{ width: 120 }}
+          label="SortTitle"
+          value= {sortTitle}
+          helperText="Sort by title"
+          onChange={(e) =>
+            setSortTittle(e.target.value as "asc" | "desc" | "none")
+          }
+        >
+          {["asc", "desc", "none"].map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
             </MenuItem>
           ))}
         </TextField>
@@ -214,7 +240,7 @@ const Products = () => {
           mt: 1,
         }}
       >
-        <Button variant="outlined" onClick={()=>navigate("/createproduct")}>
+        <Button variant="outlined" onClick={() => navigate("/createproduct")}>
           <Typography sx={{ color: "#ff5f1f" }}>Creat new product</Typography>
         </Button>
       </Box>

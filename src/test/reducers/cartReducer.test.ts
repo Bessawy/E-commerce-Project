@@ -1,11 +1,24 @@
+import { AnyAction, ThunkMiddleware } from "@reduxjs/toolkit";
+import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
+
 import { addtoCart, removeFromCart } from "../../redux/reducers/cartReducer";
 import { fetchAllProduct } from "../../redux/reducers/productReducer";
 import { createStore } from "../../redux/store";
-import { ProductType } from "../../Types/product";
+import { CartType } from "../../Types/product";
+import { UserType } from "../../Types/user";
 import server from "../shared/server";
 
-let customStore: any;
-
+let customStore: ToolkitStore<{
+    productReducer: any;
+    themeReducer: string;
+    userReducer: UserType;
+    cartReducer: CartType[];
+}, AnyAction, [ThunkMiddleware<{
+    productReducer: any;
+    themeReducer: string;
+    userReducer: UserType;
+    cartReducer: CartType[];
+}, AnyAction, undefined>]>;
 
 beforeAll(()=>{
     server.listen()

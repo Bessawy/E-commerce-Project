@@ -1,7 +1,7 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
+
 import { useAppSelector } from "../../reduxhook/hooks";
-import { StyledBadge } from "../../Themes/badgeTheme";
 import GridItem from "../../Themes/gridTheme";
 
 const Profile = () => {
@@ -37,17 +37,19 @@ const Profile = () => {
         </Grid>
         <Grid item xs={6}>
           <GridItem>
-            <Typography sx={{border:2, borderRadius: 5}}>User name</Typography>
+            <Typography sx={{ border: 2, borderRadius: 5 }}>
+              User name
+            </Typography>
           </GridItem>
         </Grid>
         <Grid item xs={6}>
           <GridItem sx={{ height: "100%" }}>
-            <Typography >{user.name}</Typography>
+            <Typography>{user.name}</Typography>
           </GridItem>
         </Grid>
         <Grid item xs={6}>
           <GridItem>
-            <Typography  sx={{border:2, borderRadius: 5}}>ID</Typography>
+            <Typography sx={{ border: 2, borderRadius: 5 }}>ID</Typography>
           </GridItem>
         </Grid>
         <Grid item xs={6}>
@@ -57,7 +59,9 @@ const Profile = () => {
         </Grid>
         <Grid item xs={6}>
           <GridItem>
-            <Typography  sx={{border:2, borderRadius: 5}}>User email</Typography>
+            <Typography sx={{ border: 2, borderRadius: 5 }}>
+              User email
+            </Typography>
           </GridItem>
         </Grid>
         <Grid item xs={6}>
@@ -67,7 +71,7 @@ const Profile = () => {
         </Grid>
         <Grid item xs={6}>
           <GridItem>
-            <Typography  sx={{border:2, borderRadius: 5}}>Role</Typography>
+            <Typography sx={{ border: 2, borderRadius: 5 }}>Role</Typography>
           </GridItem>
         </Grid>
         <Grid item xs={6}>
@@ -76,11 +80,13 @@ const Profile = () => {
           </GridItem>
         </Grid>
         <Grid item xs={12}>
-          <Box   sx={{
+          <Box
+            sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-            }}>
+            }}
+          >
             <Button variant="outlined"> Edit profile </Button>
           </Box>
         </Grid>

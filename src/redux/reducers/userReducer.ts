@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useAppSelector } from "../../reduxhook/hooks";
-import { CreateUserType, UserOptionalType, UserType } from "../../Types/user";
+
+import { CreateUserType, UserType } from "../../Types/user";
 
 export const userinttialstate: UserType = {
   id: 0,
@@ -13,7 +13,7 @@ export const userinttialstate: UserType = {
 };
 
 export const createUser = createAsyncThunk(
-  "addUser",
+  "createUser",
   async (user: CreateUserType) => {
     try {
       const response = await axios.post(
@@ -28,17 +28,21 @@ export const createUser = createAsyncThunk(
 );
 
 export const JWTLogin = createAsyncThunk("tokenLogin", async () => {
-  const access_token = localStorage.getItem("JWT");
-  const userResponse = await axios.get(
-    "https://api.escuelajs.co/api/v1/auth/profile",
-    {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    }
-  );
-  const newUser = await userResponse.data;
-  return newUser;
+  try {
+    const access_token = localStorage.getItem("JWT");
+    const userResponse = await axios.get(
+      "https://api.escuelajs.co/api/v1/auth/profile",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const newUser = await userResponse.data;
+    return newUser;
+  } catch (e) {
+    throw new Error("JWT Login failed!");
+  }
 });
 
 export const UserLogin = createAsyncThunk(
@@ -61,6 +65,7 @@ export const UserLogin = createAsyncThunk(
 const userSlice = createSlice({
   name: "userSlice",
   initialState: userinttialstate,
+
   reducers: {
     logUser: (state, action: PayloadAction<UserType>) => {
       return action.payload;
@@ -70,6 +75,7 @@ const userSlice = createSlice({
       return userinttialstate;
     },
   },
+
   extraReducers: (build) => {
     build.addCase(createUser.fulfilled, (state, action) => {
       return action.payload;

@@ -7,13 +7,14 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { ProductType } from "../../Types/product";
-import { Item } from "./product_utils";
 import EuroIcon from "@mui/icons-material/Euro";
 import InfoIcon from "@mui/icons-material/Info";
+import { useNavigate } from "react-router-dom";
+
+import { ProductType } from "../../Types/product";
+import { Item } from "./product_utils";
 import { useAppDispatch } from "../../reduxhook/hooks";
 import { addtoCart } from "../../redux/reducers/cartReducer";
-import { useNavigate } from "react-router-dom";
 
 const Image = (props: { img: string }) => {
   return (
@@ -108,8 +109,6 @@ const ProductItem = (props: { Item: ProductType }) => {
         </Grid>
       </Grid>
     </Paper>
-
-    
   );
 };
 

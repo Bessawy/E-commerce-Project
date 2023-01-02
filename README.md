@@ -1,46 +1,136 @@
-# Getting Started with Create React App
+# Front-End E-commerce Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+![](https://camo.githubusercontent.com/2a2978d145faf7cdcd17d6ce34255492ec41e691923b5d83861ad737f7a14974/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f52656163742d762e31382d626c7565)
+![](https://camo.githubusercontent.com/62f999bcedf010f2692b9221d41934ae1f8a5730beb503c1410faf588daa0b73/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f52656475782d762e312e392d707572706c65)
+![](https://camo.githubusercontent.com/2bf36eec8ef29949a861bc870dbe16640929821eb995924d0a31b28e6ec1d407/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f547970655363726970742d762e342e392d677265656e)
+![](https://camo.githubusercontent.com/225d35772b9751928d12ee689bccb63956b6ce97d056fcabfef0b2a63a9ef30c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f534153532d762e342e392d686f7470696e6b)
 
-## Available Scripts
+## Content
 
-In the project directory, you can run:
+- About
+- Features
+- Website Pages
+- Structure
+- Deployed Website Link
 
-### `npm start`
+## About
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fakeapi.platzi.com/ )
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Fetch all/single products.
+- Sort products by price and title.
+- Update/delete products. 
+- User login/logout and register.
+- Add product to cart and remove product from cart.
+- Includes feature to switch between dark/light themes.
+- Testing unit for the reducers.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Website Pages
 
-### `npm run build`
+- `/`: displays general information
+- `/products`: includes all products and allow user to search and sort products
+- `/products/:id`: contain information on a single product and has features that allow `admins` to delete or edit that specific product. The delete and edit features are not displayed to `customers`.
+- `/cart`: allow users to view products added to the cart. Users can edit the count or remove product from there.
+- `/signin` and `/signout`: allow users to login in or register a new account.
+- `/createproduct`: allow any user to create a new product "even Guest users for now".
+- `/profile`: view user profile. This route can only be accessed when user is logged in.
+- `/*`: Not found page
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+├───public
+│       clothes.jpg
+│       electronics.jpg
+│       favicon.ico
+│       furniture.jpg
+│       index.html
+│       laptop.jpg
+│       Logo.png
+│       manifest.json
+│       razor.jpg
+│       robots.txt
+│       shoes.jpg
+│
+└───src
+    │   App.tsx
+    │   index.tsx
+    │   react-app-env.d.ts
+    │
+    ├───Images
+    │       black-wallpaper.jpg
+    │       login.png
+    │       Logo.png
+    │       white-wallpaper.jpg
+    │
+    ├───Pages
+    │   │   home.tsx
+    │   │   notfound.tsx
+    │   │   routes.tsx
+    │   │   utils.ts
+    │   │
+    │   ├───cart
+    │   │       Cart.tsx
+    │   │
+    │   ├───product
+    │   │       createproduct.tsx
+    │   │       product.tsx
+    │   │       productEditForm.tsx
+    │   │       products.tsx
+    │   │       product_info.tsx
+    │   │       product_utils.ts
+    │   │
+    │   ├───slider
+    │   │       slider.scss
+    │   │       slider.tsx
+    │   │
+    │   └───userlog
+    │           login.tsx
+    │           profilePage.tsx
+    │           protectedroutes.tsx
+    │           register.tsx
+    │
+    ├───redux
+    │   │   store.ts
+    │   │
+    │   └───reducers
+    │           cartReducer.ts
+    │           productReducer.ts
+    │           themeModeReducer.ts
+    │           userReducer.ts
+    │
+    ├───reduxhook
+    │       hooks.ts
+    │
+    ├───routes
+    │       routes.tsx
+    │
+    ├───Styles
+    │       app.scss
+    │
+    ├───test
+    │   ├───reducers
+    │   │       cartReducer.test.ts
+    │   │       productReducer.test.ts
+    │   │       userReducer.test.ts
+    │   │
+    │   └───shared
+    │           server.ts
+    │
+    ├───Themes
+    │       badgeTheme.ts
+    │       darkTheme.ts
+    │       gridTheme.ts
+    │       lightTheme.ts
+    │
+    └───Types
+            product.ts
+            routes.ts
+            user.ts
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deloyed Link
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[https://frontend-project-zeta.vercel.app/](https://frontend-project-zeta.vercel.app/)

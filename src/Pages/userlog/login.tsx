@@ -11,6 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserLogin } from "../../redux/reducers/userReducer";
+
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 
 const UserForm = () => {
@@ -26,16 +27,15 @@ const UserForm = () => {
     const login = async () => {
       await dispatch(UserLogin({ email: email, password: password })).then(
         (response) => {
-          if("error" in response){
-            setMessage("Error! Your email or password are not correct.")
-            setOpen(true)
+          if ("error" in response) {
+            setMessage("Error! Your email or password are not correct.");
+            setOpen(true);
           }
         }
-      )
+      );
     };
-    login()
+    login();
   };
-
 
   useEffect(() => {
     if (user.name !== "Guest") {

@@ -1,11 +1,9 @@
 import { Box } from "@mui/material";
-import { url } from "inspector";
 import React, { useState } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import IconButton from "@mui/material/IconButton";
 import CircleIcon from "@mui/icons-material/Circle";
-
 import ".//slider.scss";
 
 interface SliderPropsType {
@@ -30,8 +28,13 @@ const ImageSlider = (props: SliderPropsType) => {
   };
 
   return (
-    <Box sx={{ height: "100%", width: "100%"}}>
-      <Box className="Slider" style={slideStyle}  border={1} sx={{boxShadow: 3}}>
+    <Box sx={{ height: "100%", width: "100%" }}>
+      <Box
+        className="Slider"
+        style={slideStyle}
+        border={1}
+        sx={{ boxShadow: 3 }}
+      >
         <IconButton
           className="Slider__leftArrow"
           onClick={() => setCurrentIndex(currentIndex - 1)}

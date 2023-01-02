@@ -40,7 +40,7 @@ const Createproduct = () => {
 
     dispatch(addProductServer(createProduct)).then((data) => {
       if ("error" in data) {
-        setMessage("Failed to create Product");
+        setMessage("Failed to create Product (Invalid Data)");
         setOpen(true);
       } else {
         navigate("/products");

@@ -1,9 +1,7 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { useState } from "react";
-import {
-  ProductType, ProductUpdateType,
-} from "../../Types/product";
 
+import { ProductType, ProductUpdateType } from "../../Types/product";
 
 const ProductEditForm = (props: {
   product: ProductType;

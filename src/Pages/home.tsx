@@ -1,18 +1,12 @@
 import { Box, Divider, Grid, List, ListItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ImageSlider from "./slider/slider";
 import CheckroomIcon from "@mui/icons-material/Checkroom";
 import WeekendIcon from "@mui/icons-material/Weekend";
 import LaptopChromebookIcon from "@mui/icons-material/LaptopChromebook";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import IceSkatingOutlinedIcon from "@mui/icons-material/IceSkatingOutlined";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-
-import { Navigation, Pagination, Scrollbar } from "swiper";
-import { useAppSelector } from "../reduxhook/hooks";
-import { ProductType } from "../Types/product";
-import ProductItem from "./product/product";
+import { Navigation, Pagination } from "swiper";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Typewriter from "react-ts-typewriter";
@@ -22,6 +16,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+import { useAppSelector } from "../reduxhook/hooks";
+import { ProductType } from "../Types/product";
+import ProductItem from "./product/product";
 
 const images = [
   "/clothes.jpg",
@@ -99,26 +96,30 @@ const Home = () => {
         </Grid>
         <Grid item xs={7}>
           <Swiper
-        pagination={{
-          type: "progressbar",
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
+            pagination={{
+              type: "progressbar",
+            }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
             {images.map((item, index) => {
               return (
                 <SwiperSlide key={index}>
                   <Box
                     component="img"
                     src={item}
-                    sx={{ width: "100%", height: 380, boxShadow:3, borderRadius: 10 }}
+                    sx={{
+                      width: "100%",
+                      height: 380,
+                      boxShadow: 3,
+                      borderRadius: 10,
+                    }}
                   ></Box>
                 </SwiperSlide>
               );
             })}
           </Swiper>
-      
         </Grid>
       </Grid>
       <Divider sx={{ marginTop: 5, marginBottom: 2 }} />
@@ -164,8 +165,8 @@ const Home = () => {
       <Box marginTop={3}>
         <Typography variant="h6" textAlign="center">
           Hello! are you interested in knowing more about our
-          <Typography  variant="inherit" color="#FF5F1F" textAlign="center">
-            <Typewriter 
+          <Typography variant="inherit" color="#FF5F1F" textAlign="center">
+            <Typewriter
               text={[" Future Discounts", "New Porducts", "Company News"]}
               loop={true}
               delay={2000}

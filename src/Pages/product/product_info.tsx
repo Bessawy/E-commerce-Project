@@ -10,14 +10,15 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ProductType, ProductUpdateType } from "../../Types/product";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { EffectCube, Navigation, Pagination } from "swiper";
 import EuroIcon from "@mui/icons-material/Euro";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { EffectCube, Navigation, Pagination } from "swiper";
 import "swiper/css/effect-cube";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { ProductType, ProductUpdateType } from "../../Types/product";
 import GridItem from "../../Themes/gridTheme";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 import { addtoCart } from "../../redux/reducers/cartReducer";
@@ -32,14 +33,14 @@ const ProductInfo = () => {
   const [product, setProduct] = useState<ProductType>(stateObj.state);
   const [deleteExp, setDeleteExp] = React.useState<true | false>(false);
   const [expanded, setExpanded] = React.useState<true | false>(false);
-  const navigate = useNavigate()
-  const user = useAppSelector(state => state.userReducer)
+  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
-  const deleteProduct = ()=> {
-    dispatch(deleteItemServer(product.id))
-    navigate("/products")
-  }
+  const deleteProduct = () => {
+    dispatch(deleteItemServer(product.id));
+    navigate("/products");
+  };
 
   const editItemHandler = (newItem: ProductUpdateType) => {
     let newProduct = { ...product };
@@ -49,6 +50,7 @@ const ProductInfo = () => {
     setProduct(newProduct);
     dispatch(updateItemServer(newProduct));
   };
+
   return (
     <Box marginTop={20} marginLeft={4} marginRight={4}>
       <Grid container spacing={2}>
@@ -128,63 +130,65 @@ const ProductInfo = () => {
         </Grid>
       </Grid>
 
-       { user.role === "admin" && <Box sx={{ marginTop: 8 }}>
-        <Accordion expanded={expanded}>
-          <AccordionSummary
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              Edit Product
-            </Typography>
-            <Typography sx={{ color: "text.secondary" }}>
-              {product.title}
-            </Typography>
-            <Button
-              onClick={() =>
-                expanded ? setExpanded(false) : setExpanded(true)
-              }
-              sx={{ marginLeft: "auto" }}
+      {user.role === "admin" && (
+        <Box sx={{ marginTop: 8 }}>
+          <Accordion expanded={expanded}>
+            <AccordionSummary
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
             >
-              <ExpandMoreIcon fontSize="small" />
-            </Button>
-          </AccordionSummary>
-          <AccordionDetails>
-            <ProductForm product={product} formHandler={editItemHandler} />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={deleteExp}>
-          <AccordionSummary
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              Delete Product
-            </Typography>
-            <Typography sx={{ color: "text.secondary" }}>
-              {product.title}
-            </Typography>
-            <Button
-              onClick={() =>
-                deleteExp ? setDeleteExp(false) : setDeleteExp(true)
-              }
-              sx={{ marginLeft: "auto" }}
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                Edit Product
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {product.title}
+              </Typography>
+              <Button
+                onClick={() =>
+                  expanded ? setExpanded(false) : setExpanded(true)
+                }
+                sx={{ marginLeft: "auto" }}
+              >
+                <ExpandMoreIcon fontSize="small" />
+              </Button>
+            </AccordionSummary>
+            <AccordionDetails>
+              <ProductForm product={product} formHandler={editItemHandler} />
+            </AccordionDetails>
+          </Accordion>
+          <Accordion expanded={deleteExp}>
+            <AccordionSummary
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
             >
-              <ExpandMoreIcon fontSize="small" />
-            </Button>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              {" "}
-              Are you sure you want to <Button onClick={()=> deleteProduct()}>Delete</Button> this Item?
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </Box>}
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                Delete Product
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {product.title}
+              </Typography>
+              <Button
+                onClick={() =>
+                  deleteExp ? setDeleteExp(false) : setDeleteExp(true)
+                }
+                sx={{ marginLeft: "auto" }}
+              >
+                <ExpandMoreIcon fontSize="small" />
+              </Button>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {" "}
+                Are you sure you want to{" "}
+                <Button onClick={() => deleteProduct()}>Delete</Button> this
+                Item?
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
+      )}
     </Box>
   );
 };
 
 export default ProductInfo;
-
-

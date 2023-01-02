@@ -4,22 +4,20 @@ import {
   Divider,
   Grid,
   IconButton,
-  Paper,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
+import React from "react";
 import GridItem from "../../Themes/gridTheme";
 import EuroIcon from "@mui/icons-material/Euro";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+
+import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 import { addtoCart, removeFromCart } from "../../redux/reducers/cartReducer";
 
 const Cart = () => {
   const cartItems = useAppSelector((state) => state.cartReducer);
-  const dispatch = useAppDispatch()
-
-
+  const dispatch = useAppDispatch();
 
   return (
     <Box marginTop={20}>
@@ -60,11 +58,19 @@ const Cart = () => {
                           alignItems: "center",
                         }}
                       >
-                        <IconButton  onClick={()=>{dispatch(removeFromCart(index))}}>
+                        <IconButton
+                          onClick={() => {
+                            dispatch(removeFromCart(index));
+                          }}
+                        >
                           <RemoveIcon />
                         </IconButton>
                         <Typography variant="h6"> {item.count}</Typography>
-                        <IconButton onClick={()=>{dispatch(addtoCart(item))}}>
+                        <IconButton
+                          onClick={() => {
+                            dispatch(addtoCart(item));
+                          }}
+                        >
                           <AddIcon />
                         </IconButton>
                       </Box>
@@ -89,11 +95,10 @@ const Cart = () => {
           </Box>
         );
       })}
-
       <Box>
         <GridItem>
           <Typography variant="h6">Total Price</Typography>
-          <Divider/>
+          <Divider />
         </GridItem>
         <GridItem>
           <Typography
@@ -101,17 +106,15 @@ const Cart = () => {
             sx={{ fontSize: 16, fontWeight: 700 }}
             color="secondary"
           >
-            {
-              cartItems.reduce(function(acc, item){ return acc + item.price*item.count}, 0)
-            } <EuroIcon sx={{ fontSize: 12 }} />
+            {cartItems.reduce(function (acc, item) {
+              return acc + item.price * item.count;
+            }, 0)}{" "}
+            <EuroIcon sx={{ fontSize: 12 }} />
           </Typography>
         </GridItem>
         <GridItem>
-        <Button variant="contained">
-          BUY PRODUCTS
-        </Button>
+          <Button variant="contained">BUY PRODUCTS</Button>
         </GridItem>
-      
       </Box>
     </Box>
   );

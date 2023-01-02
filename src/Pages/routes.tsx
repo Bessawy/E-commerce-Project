@@ -18,13 +18,13 @@ import {
   Typography,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
+
 import { navMenuType } from "../Types/routes";
 import { JWTLogin, signOutUser } from "../redux/reducers/userReducer";
 import { StyledBadge } from "../Themes/badgeTheme";
-
 
 export const Routes = () => {
   const mode = useAppSelector((state) => state.themeReducer) as
@@ -79,7 +79,7 @@ export const Routes = () => {
     },
   ];
 
-  const handleClose = (event: Event | React.SyntheticEvent) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -92,9 +92,9 @@ export const Routes = () => {
     }
   }
 
-  useEffect(()=>{
-    dispatch(JWTLogin())
-  }, [])
+  useEffect(() => {
+    dispatch(JWTLogin());
+  }, []);
 
   useEffect(() => {
     let count = 0;
@@ -244,9 +244,7 @@ export const Routes = () => {
           </Box>
         </Toolbar>
       </AppBar>
-
       <Outlet />
-
       <footer>
         <Paper sx={{ marginTop: 10, paddingBottom: 10, paddingTop: 6 }}>
           <Container maxWidth="lg">
@@ -258,13 +256,13 @@ export const Routes = () => {
                     Help
                   </Box>
                   <Box>
-                    <NavLink to="/"> Contact </NavLink>
+                    <NavLink to="/contact"> Contact </NavLink>
                   </Box>
                   <Box>
-                    <NavLink to="/"> Support </NavLink>
+                    <NavLink to="/support"> Support </NavLink>
                   </Box>
                   <Box>
-                    <NavLink to="/"> Privacy </NavLink>
+                    <NavLink to="/privacy"> Privacy </NavLink>
                   </Box>
                 </Grid>
                 <Grid item xs={4}>
@@ -300,9 +298,3 @@ export const Routes = () => {
     </div>
   );
 };
-function setUseItems(count: number) {
-  throw new Error("Function not implemented.");
-}
-
-
-

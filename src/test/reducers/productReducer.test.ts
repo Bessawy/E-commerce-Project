@@ -1,3 +1,6 @@
+import { AnyAction, ThunkMiddleware } from "@reduxjs/toolkit";
+import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
+
 import {
   addProductServer,
   deleteItemServer,
@@ -5,10 +8,21 @@ import {
   updateItemServer,
 } from "../../redux/reducers/productReducer";
 import { createStore } from "../../redux/store";
-import { ProductCreateType, ProductType } from "../../Types/product";
+import { CartType, ProductCreateType, ProductType } from "../../Types/product";
+import { UserType } from "../../Types/user";
 import server from "../shared/server";
 
-let customStore: any;
+let customStore: ToolkitStore<{
+  productReducer: any;
+  themeReducer: string;
+  userReducer: UserType;
+  cartReducer: CartType[];
+}, AnyAction, [ThunkMiddleware<{
+  productReducer: any;
+  themeReducer: string;
+  userReducer: UserType;
+  cartReducer: CartType[];
+}, AnyAction, undefined>]>;
 
 beforeAll(() => {
   server.listen();
@@ -198,9 +212,6 @@ describe("Test products actions", () => {
     expect(indicator).toBe(undefined)
 
   });
-
-
-
 });
 
 export {};

@@ -54,13 +54,14 @@ span.swiper-pagination-bullet {
   background-color: #ff5f1f;
 }
 
-swiper-container {
+.swiper-container {
   width: 300px;
   height: 300px;
   position: absolute;
   left: 10%;
   top: 50%;
 }
+
 .swiper-slide {
   background-position: center;
   background-size: cover;

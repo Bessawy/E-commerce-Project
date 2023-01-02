@@ -1,8 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
-import { modifyProductType, ProductCreateType, ProductType } from "../../Types/product";
+
+import {
+  modifyProductType,
+  ProductCreateType,
+  ProductType,
+} from "../../Types/product";
 
 const intialstate: ProductType[] = [];
+
 export const fetchAllProduct = createAsyncThunk("fetchProducts", async () => {
   try {
     const response = await axios.get(
@@ -15,21 +21,34 @@ export const fetchAllProduct = createAsyncThunk("fetchProducts", async () => {
   }
 });
 
+export const fetchSingleProduct = createAsyncThunk(
+  "fetchSingleProducts",
+  async (id: number) => {
+    try {
+      const response = await axios.get(
+        "https://api.escuelajs.co/api/v1/products/" + id
+      );
+      const data = await response.data;
+      return data;
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+  }
+);
+
 export const addProductServer = createAsyncThunk(
-  "addProduct",
-  async (product: ProductCreateType, { dispatch }) => {
+  "addProductToBackendServer",
+  async (product: ProductCreateType) => {
     try {
       const response: AxiosResponse<ProductType, ProductType> =
-        await axios.post("https://api.escuelajs.co/api/v1/products/", 
-        {
-          "title": product.title,
-          "price": product.price,
-          "description": product.description,
-          "categoryId": product.categoryId,
-          "images": product.images
+        await axios.post("https://api.escuelajs.co/api/v1/products/", {
+          title: product.title,
+          price: product.price,
+          description: product.description,
+          categoryId: product.categoryId,
+          images: product.images,
         });
-    
-      return response.data
+      return response.data;
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -37,7 +56,7 @@ export const addProductServer = createAsyncThunk(
 );
 
 export const updateItemServer = createAsyncThunk(
-  "modifyProduct",
+  "modifyProductonServer",
   async (Item: ProductType, { dispatch }) => {
     try {
       const response = await axios.put(
@@ -48,9 +67,9 @@ export const updateItemServer = createAsyncThunk(
           description: Item.description,
         }
       );
-      const data = response.data;
-      dispatch(modifyItem({update: data}))
-      return data
+      const data = await response.data;
+      dispatch(modifyItem({ update: data }));
+      return data;
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -75,6 +94,7 @@ export const deleteItemServer = createAsyncThunk(
 const productSlice = createSlice({
   name: "productSlice",
   initialState: intialstate,
+  
   reducers: {
     addItems: (state, action) => {
       return action.payload;
@@ -116,10 +136,17 @@ const productSlice = createSlice({
     build.addCase(fetchAllProduct.rejected, (state, action) => {
       return state;
     });
-    build.addCase(fetchAllProduct.pending, (state, action) => {
-      console.log("Data is loading....");
-      return state;
-    });
+    build.addCase(
+      fetchSingleProduct.fulfilled,
+      (state: ProductType[], action: PayloadAction<ProductType>) => {
+        const find = state.find((item) => item.id === action.payload.id);
+        if (find) {
+          return state;
+        } else {
+          state.push(action.payload);
+        }
+      }
+    );
     build.addCase(addProductServer.fulfilled, (state, action) => {
       if (action.payload) {
         state.push(action.payload);
@@ -140,7 +167,3 @@ const productSlice = createSlice({
 const productReducer = productSlice.reducer;
 export const { deleteItem, modifyItem } = productSlice.actions;
 export default productReducer;
-function pushItem(data: ProductType): any {
-  throw new Error("Function not implemented.");
-}
-

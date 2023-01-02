@@ -38,7 +38,7 @@ export interface ProductUpdateType {
 }
 
 export interface ProductCreateType {
-  title: string,
+  title: string;
   price: number;
   description: string;
   categoryId: number;
@@ -51,6 +51,7 @@ export type CreateCategoryType =
   | "Furniture"
   | "Shoes"
   | "Others";
+
 export type ProductListType =
   | "All"
   | "Clothes"
@@ -58,4 +59,5 @@ export type ProductListType =
   | "Furniture"
   | "Shoes"
   | "Others";
+
 export type SortType = "None" | "Lowest" | "Highest";

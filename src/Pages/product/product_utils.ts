@@ -109,7 +109,6 @@ export const getPagesNo = (total: number, each: number) =>{
   return Math.ceil(total/each)
 }
 
-
 export const scrollUp = () =>{
   window.scrollTo({
     top: 0,

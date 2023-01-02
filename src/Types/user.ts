@@ -1,4 +1,4 @@
-import { Url } from "url"
+
 
 export interface UserType{
     id: number,
