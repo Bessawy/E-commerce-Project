@@ -8,7 +8,7 @@ import IceSkatingOutlinedIcon from "@mui/icons-material/IceSkatingOutlined";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Typewriter from "react-ts-typewriter";
 import TextField from "@mui/material/TextField";
 import "swiper/css/scrollbar";
@@ -32,10 +32,15 @@ const advertise = ["laptop.jpg", "razor.jpg"];
 const Home = () => {
   const products = useAppSelector((state) => state.productReducer);
   const [productList, setProductList] = useState<ProductType[]>([]);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     setProductList(products.slice(0, 10));
   }, [products]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const navigate = useNavigate();
 

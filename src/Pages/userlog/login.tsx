@@ -1,3 +1,4 @@
+import LoadingButton from "@mui/lab/LoadingButton/LoadingButton";
 import {
   Alert,
   Box,
@@ -9,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UserLogin } from "../../redux/reducers/userReducer";
 
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
@@ -19,11 +20,13 @@ const UserForm = () => {
   const [password, setPassword] = useState<string>("");
   const [open, setOpen] = React.useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.userReducer);
 
   const signinHandler = () => {
+    setLoading(true)
     const login = async () => {
       await dispatch(UserLogin({ email: email, password: password })).then(
         (response) => {
@@ -31,6 +34,7 @@ const UserForm = () => {
             setMessage("Error! Your email or password are not correct.");
             setOpen(true);
           }
+          setLoading(false)
         }
       );
     };
@@ -53,7 +57,10 @@ const UserForm = () => {
         marginTop: 3,
       }}
     >
-      <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
+      <NavLink to="/">
+        {" "}
+        <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
+      </NavLink>
       <Paper sx={{ marginTop: 5, width: 500 }} component="form">
         <Typography variant="h5" sx={{ marginTop: 3, marginLeft: 5 }}>
           {" "}
@@ -96,14 +103,15 @@ const UserForm = () => {
             marginBottom: 5,
           }}
         >
-          <Button
+          <LoadingButton
             variant="contained"
+            loading={loading}
             onClick={(e) => {
               signinHandler();
             }}
           >
             Continue
-          </Button>
+          </LoadingButton>
           <Typography variant="caption" marginTop={2} color="#FF5F1F">
             {" "}
             By continuing, I agree to Amr’s Privacy Policy and Terms of Use.
@@ -123,6 +131,7 @@ const UserForm = () => {
             }}
           >
             <Button
+              disabled={loading}
               variant="contained"
               sx={{ marginTop: 1, width: 300 }}
               onClick={() => navigate("/signup")}

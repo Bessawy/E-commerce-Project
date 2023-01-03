@@ -26,7 +26,7 @@ import {
   scrollUp,
   sortOptions,
 } from "./product_utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Products = () => {
   const products: ProductType[] = useAppSelector(
@@ -44,6 +44,7 @@ const Products = () => {
 
   const pages_no = getPagesNo(productList.length, ItemsInPage);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const filterItemsHandler = () => {
     setCurrentPage(1);
@@ -71,6 +72,10 @@ const Products = () => {
       setProductList(productSearch.filter((item) => item.category.id === id));
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     setProductList(products);

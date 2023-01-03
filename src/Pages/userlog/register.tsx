@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Box,
@@ -10,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { createUser } from "../../redux/reducers/userReducer";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
@@ -23,15 +24,18 @@ const UserForm = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [msgStatus, setmsgStatus] = useState<"error" | "success">("success");
+  const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userReducer);
 
   const createAccount = () => {
+    setloading(true);
     if (password.length < 5) {
       setMessage("Password is too short!");
       setmsgStatus("error");
       setOpen(true);
+      setloading(false);
     } else {
       dispatch(
         createUser({
@@ -46,6 +50,8 @@ const UserForm = () => {
           setmsgStatus("error");
           setOpen(true);
         }
+        navigate("/signin");
+        setloading(false);
       });
     }
   };
@@ -64,9 +70,13 @@ const UserForm = () => {
         justifyContent: "center",
         alignItems: "center",
         marginTop: 3,
+        marginBottom: 2,
       }}
     >
-      <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
+      <NavLink to="/">
+        {" "}
+        <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
+      </NavLink>
       <Paper sx={{ marginTop: 5, width: 500 }} component="form">
         <Typography variant="h5" sx={{ marginTop: 3, marginLeft: 5 }}>
           {" "}
@@ -135,17 +145,18 @@ const UserForm = () => {
             alignItems: "center",
             display: "flex",
             flexDirection: "column",
-            marginTop: 5,
-            marginBottom: 5,
+            marginTop: 3,
+            marginBottom: 2,
           }}
         >
-          <Button
+          <LoadingButton
             variant="contained"
+            loading={loading}
             type="submit"
             onClick={() => createAccount()}
           >
             Create Account
-          </Button>
+          </LoadingButton>
           <Typography variant="caption" marginTop={2} color="#FF5F1F">
             {" "}
             By continuing, I agree to Amr’s Privacy Policy and Terms of Use.
@@ -163,12 +174,14 @@ const UserForm = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginBottom: 2,
           }}
         >
           <Button
             variant="contained"
             sx={{ margin: 1, width: 100 }}
             onClick={() => navigate("/signin")}
+            disabled={loading}
           >
             Sign in
           </Button>

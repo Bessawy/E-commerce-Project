@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 
 import { ProductType, ProductUpdateType } from "../../Types/product";
