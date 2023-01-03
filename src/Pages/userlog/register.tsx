@@ -54,7 +54,7 @@ const UserForm = () => {
     if (user.name !== "Guest") {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <Box

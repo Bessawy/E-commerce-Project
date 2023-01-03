@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAllProduct());
-  }, []);
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>

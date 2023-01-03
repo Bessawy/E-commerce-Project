@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
 
@@ -32,6 +32,7 @@ export const Routes = () => {
     | "light";
 
   const dispatch = useAppDispatch();
+ 
   const toggleTheme = () => {
     dispatch(toggleThemeMode());
   };
@@ -43,41 +44,6 @@ export const Routes = () => {
   const [menu, setMenu] = useState<navMenuType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  const signedinMenu = [
-    {
-      id: 2,
-      state: "Sign out",
-      action: () => {
-        dispatch(signOutUser());
-        navigate("/");
-      },
-    },
-    {
-      id: 3,
-      state: "Profile",
-      action: () => {
-        navigate("/profile");
-      },
-    },
-  ];
-
-  const guestMenu = [
-    {
-      id: 0,
-      state: "Sign in",
-      action: () => {
-        navigate("/signin");
-      },
-    },
-    {
-      id: 1,
-      state: "Sign up",
-      action: () => {
-        navigate("/signup");
-      },
-    },
-  ];
 
   const handleClose = () => {
     setOpen(false);
@@ -94,7 +60,7 @@ export const Routes = () => {
 
   useEffect(() => {
     dispatch(JWTLogin());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     let count = 0;
@@ -105,12 +71,47 @@ export const Routes = () => {
   }, [cart]);
 
   useEffect(() => {
+    const signedinMenu = [
+      {
+        id: 2,
+        state: "Sign out",
+        action: () => {
+          dispatch(signOutUser());
+          navigate("/");
+        },
+      },
+      {
+        id: 3,
+        state: "Profile",
+        action: () => {
+          navigate("/profile");
+        },
+      },
+    ];
+
+    const guestMenu = [
+      {
+        id: 0,
+        state: "Sign in",
+        action: () => {
+          navigate("/signin");
+        },
+      },
+      {
+        id: 1,
+        state: "Sign up",
+        action: () => {
+          navigate("/signup");
+        },
+      },
+    ];
+
     if (user.id === 0) {
       setMenu(guestMenu);
     } else {
       setMenu(signedinMenu);
     }
-  }, [user]);
+  }, [user, dispatch, navigate]);
 
   return (
     <div className="root">
