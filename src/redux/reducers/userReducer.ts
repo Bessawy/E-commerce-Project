@@ -12,6 +12,25 @@ export const userinttialstate: UserType = {
   avatar: "",
 };
 
+export const editUserServer = createAsyncThunk(
+  "editUserServer",
+  async (user: UserType) => {
+    try {
+      const response = await axios.put(
+        "https://api.escuelajs.co/api/v1/users/" + user.id,
+        {
+          email: user.email,
+          password: user.password,
+          name: user.name,
+        }
+      );
+      return response.data;
+    } catch (e) {
+      throw new Error("Couldnot edit user");
+    }
+  }
+);
+
 export const createUser = createAsyncThunk(
   "createUser",
   async (user: CreateUserType) => {
@@ -30,6 +49,11 @@ export const createUser = createAsyncThunk(
 export const JWTLogin = createAsyncThunk("tokenLogin", async () => {
   try {
     const access_token = localStorage.getItem("JWT");
+
+    if (!access_token) {
+      return userinttialstate;
+    }
+
     const userResponse = await axios.get(
       "https://api.escuelajs.co/api/v1/auth/profile",
       {
@@ -78,11 +102,17 @@ const userSlice = createSlice({
 
   extraReducers: (build) => {
     build.addCase(createUser.fulfilled, (state, action) => {
-      return action.payload;
+      //return action.payload;
     });
     build.addCase(JWTLogin.fulfilled, (state, action) => {
       return action.payload;
     });
+    build.addCase(
+      editUserServer.fulfilled,
+      (state, action: PayloadAction<UserType>) => {
+        return action.payload;
+      }
+    );
   },
 });
 

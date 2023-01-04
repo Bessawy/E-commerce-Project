@@ -1,4 +1,13 @@
-import { Box, Divider, Grid, List, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CheckroomIcon from "@mui/icons-material/Checkroom";
 import WeekendIcon from "@mui/icons-material/Weekend";
@@ -19,6 +28,7 @@ import "swiper/css/navigation";
 import { useAppSelector } from "../reduxhook/hooks";
 import { ProductType } from "../Types/product";
 import ProductItem from "./product/product";
+import { FlexBox } from "../Themes/badgeTheme";
 
 const images = [
   "/clothes.jpg",
@@ -33,6 +43,8 @@ const Home = () => {
   const products = useAppSelector((state) => state.productReducer);
   const [productList, setProductList] = useState<ProductType[]>([]);
   const { pathname } = useLocation();
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     setProductList(products.slice(0, 10));
@@ -45,13 +57,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <Box
-      sx={{
-        marginTop: 0,
-        marginLeft: 10,
-        marginRight: 10,
-      }}
-    >
+    <Box>
       <Swiper className="mySwiper">
         {advertise.map((item, index) => {
           return (
@@ -59,72 +65,76 @@ const Home = () => {
               <Box
                 component="img"
                 src={item}
-                sx={{ width: "100%", height: 450 }}
+                sx={{ width: "100%", height: isMatch ? 250 : 450 }}
               ></Box>
             </SwiperSlide>
           );
         })}
       </Swiper>
       <Divider sx={{ margin: 2 }} />
-      <Grid
-        container
-        spacing={10}
-        sx={{ height: 500, minWidth: 1000, marginLeft: "auto" }}
-      >
-        <Grid item xs={3}>
-          <Typography variant="h5" color="#FF5F1F">
-            Product Categories
-          </Typography>
-          <Divider />
-          <List>
-            <ListItem>
-              <IceSkatingOutlinedIcon sx={{ marginRight: 2 }} /> Shoes
-            </ListItem>
-            <ListItem>
-              <LaptopChromebookIcon sx={{ marginRight: 2 }} /> Electronics
-            </ListItem>
-            <ListItem>
-              <WeekendIcon sx={{ marginRight: 2 }} /> Furniture
-            </ListItem>
-            <ListItem>
-              <CheckroomIcon sx={{ marginRight: 2 }} />
-              Clothes
-            </ListItem>
-            <ListItem>
-              <AddOutlinedIcon sx={{ marginRight: 2 }} /> Others
-            </ListItem>
-          </List>
-          <Divider />
-          <Typography variant="h6" marginTop={6}>
-            More Product are added on a daily basis
-          </Typography>
+      <Grid container spacing={2} mt={2}>
+        <Grid item md={1} xs={0}></Grid>
+        <Grid item xs={12} md={4}>
+          <FlexBox sx={{flexDirection: "column", p: 3}}>
+            <Typography variant="h5" color="#FF5F1F">
+              Product Categories
+            </Typography>
+            <Divider />
+            <List>
+              <ListItem>
+                <IceSkatingOutlinedIcon sx={{ marginRight: 2 }} /> Shoes
+              </ListItem>
+              <ListItem>
+                <LaptopChromebookIcon sx={{ marginRight: 2 }} /> Electronics
+              </ListItem>
+              <ListItem>
+                <WeekendIcon sx={{ marginRight: 2 }} /> Furniture
+              </ListItem>
+              <ListItem>
+                <CheckroomIcon sx={{ marginRight: 2 }} />
+                Clothes
+              </ListItem>
+              <ListItem>
+                <AddOutlinedIcon sx={{ marginRight: 2 }} /> Others
+              </ListItem>
+            </List>
+            <Divider />
+            <Typography variant="h6" marginTop={2} textAlign={"center"}>
+              More Product are added on a daily basis
+            </Typography>
+          </FlexBox>
         </Grid>
-        <Grid item xs={7}>
-          <Swiper
-            pagination={{
-              type: "progressbar",
-            }}
-            navigation={true}
-            modules={[Pagination, Navigation]}
-            className="mySwiper"
+        <Grid item xs={12} md={6}>
+          <FlexBox
+            sx={{ width: "80%", m: "auto" }}
+            height={isMatch ? "40vh" : "50vh"}
           >
-            {images.map((item, index) => {
-              return (
-                <SwiperSlide key={index}>
-                  <Box
-                    component="img"
-                    src={item}
-                    sx={{
-                      width: "100%",
-                      height: 380,
-                      boxShadow: 3,
-                      borderRadius: 10,
-                    }}
-                  ></Box>
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
+            <Swiper
+              pagination={{
+                type: "progressbar",
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+              {images.map((item, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <Box
+                      component="img"
+                      src={item}
+                      sx={{
+                        width: "100%",
+                        boxShadow: 3,
+                        borderRadius: 10,
+                      }}
+                      height={isMatch ? "40vh" : "50vh"}
+                    ></Box>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </FlexBox>
         </Grid>
       </Grid>
       <Divider sx={{ marginTop: 5, marginBottom: 2 }} />
@@ -141,11 +151,12 @@ const Home = () => {
           boxShadow: 3,
           borderRadius: 10,
           padding: 2,
+          m: 2,
           borderColor: "#FF5F1F",
         }}
       >
         <Swiper
-          slidesPerView={3.5}
+          slidesPerView={isMatch ? 1.05 : 3.5}
           spaceBetween={20}
           centeredSlides={true}
           modules={[Pagination]}

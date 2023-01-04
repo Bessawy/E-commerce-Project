@@ -16,6 +16,8 @@ import {
   Popper,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -25,6 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { navMenuType } from "../Types/routes";
 import { JWTLogin, signOutUser } from "../redux/reducers/userReducer";
 import { StyledBadge } from "../Themes/badgeTheme";
+import DrawerComp from "../features/drawerComp";
 
 export const Routes = () => {
   const mode = useAppSelector((state) => state.themeReducer) as
@@ -32,7 +35,7 @@ export const Routes = () => {
     | "light";
 
   const dispatch = useAppDispatch();
- 
+
   const toggleTheme = () => {
     dispatch(toggleThemeMode());
   };
@@ -43,6 +46,9 @@ export const Routes = () => {
   const [cartItems, setCartItems] = useState<number>(0);
   const [menu, setMenu] = useState<navMenuType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+
+  const theme = useTheme();
+  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -125,126 +131,169 @@ export const Routes = () => {
             p: 0,
           }}
         >
-          <NavLink to="/">
-            {" "}
-            <Box
-              className="logo_img"
-              sx={{ width: 230, height: 50, marginRight: 10 }}
-            ></Box>
-          </NavLink>
-          <Typography>
-            <NavLink to="/"> Home </NavLink>
-          </Typography>
-          <Typography sx={{ ml: 2 }}>
-            <NavLink to="/products"> Products </NavLink>
-          </Typography>
-          <IconButton sx={{ marginLeft: "auto" }} onClick={toggleTheme}>
-            {mode === "dark" ? <ModeNightIcon /> : <LightModeIcon />}
-          </IconButton>
-          <IconButton
-            sx={{ marginRight: 3 }}
-            onClick={() => {
-              navigate("/cart");
-            }}
-          >
-            <Badge
-              badgeContent={cartItems}
-              color="warning"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-            >
-              {" "}
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-
-          <Box
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              display: "flex",
-            }}
-          >
-            <IconButton
-              ref={anchorRef}
-              id="composition-button"
-              onClick={() => setOpen((prevOpen) => !prevOpen)}
-              aria-controls={open ? "composition-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
-              aria-haspopup="true"
-            >
-              <StyledBadge
-                variant="dot"
-                color={user.id ? "success" : "error"}
-                badgeContent=""
+          {isMatch ? (
+            <>
+              <DrawerComp menu={menu} avatar={user.avatar}/>
+                <NavLink to="/">
+                {" "}
+                <Box
+                  className="logo_img"
+                  sx={{ width: 230, height: 50}}
+                ></Box>
+              </NavLink>
+              <IconButton sx={{ marginLeft: "auto" }} onClick={toggleTheme}>
+                {mode === "dark" ? <ModeNightIcon /> : <LightModeIcon />}
+              </IconButton>
+              <IconButton
+                sx={{ marginRight: 3 }}
+                onClick={() => {
+                  navigate("/cart");
+                }}
               >
-                {user.avatar ? (
-                  <Box
-                    component="img"
-                    sx={{ width: 50, height: 50, borderRadius: 25 }}
-                    src={user.avatar}
-                  ></Box>
-                ) : (
-                  <Box
-                    className="login_img"
-                    sx={{ width: 50, height: 50 }}
-                  ></Box>
-                )}
-              </StyledBadge>
-            </IconButton>
-            <Popper
-              open={open}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              placement="bottom"
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom-start" ? "left top" : "left bottom",
+                <Badge
+                  badgeContent={cartItems}
+                  color="warning"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
                   }}
                 >
-                  <Paper sx={{ marginTop: 1 }}>
-                    <Box borderBottom={1}>
-                      <Typography textAlign="center"> {user.name} </Typography>
-                    </Box>
+                  {" "}
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+              
+            </>
+          ) : (
+            <>
+              <NavLink to="/">
+                {" "}
+                <Box
+                  className="logo_img"
+                  sx={{ width: 230, height: 50, marginRight: 10 }}
+                ></Box>
+              </NavLink>
+              <Typography>
+                <NavLink to="/"> Home </NavLink>
+              </Typography>
+              <Typography sx={{ ml: 2 }}>
+                <NavLink to="/products"> Products </NavLink>
+              </Typography>
+              <IconButton sx={{ marginLeft: "auto" }} onClick={toggleTheme}>
+                {mode === "dark" ? <ModeNightIcon /> : <LightModeIcon />}
+              </IconButton>
+              <IconButton
+                sx={{ marginRight: 3 }}
+                onClick={() => {
+                  navigate("/cart");
+                }}
+              >
+                <Badge
+                  badgeContent={cartItems}
+                  color="warning"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                >
+                  {" "}
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
 
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList
-                        autoFocusItem={open}
-                        id="composition-menu"
-                        aria-labelledby="composition-button"
-                        onKeyDown={handleListKeyDown}
-                      >
-                        {menu.map((item) => {
-                          return (
-                            <MenuItem
-                              key={item.state}
-                              onClick={() => {
-                                item.action();
-                              }}
-                            >
-                              <Typography variant="subtitle2">
-                                {item.state}
-                              </Typography>
-                            </MenuItem>
-                          );
-                        })}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </Box>
+              <Box
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                <IconButton
+                  ref={anchorRef}
+                  id="composition-button"
+                  onClick={() => setOpen((prevOpen) => !prevOpen)}
+                  aria-controls={open ? "composition-menu" : undefined}
+                  aria-expanded={open ? "true" : undefined}
+                  aria-haspopup="true"
+                >
+                  <StyledBadge
+                    variant="dot"
+                    color={user.id ? "success" : "error"}
+                    badgeContent=""
+                  >
+                    {user.avatar ? (
+                      <Box
+                        component="img"
+                        sx={{ width: 50, height: 50, borderRadius: 25 }}
+                        src={user.avatar}
+                      ></Box>
+                    ) : (
+                      <Box
+                        className="login_img"
+                        sx={{ width: 50, height: 50 }}
+                      ></Box>
+                    )}
+                  </StyledBadge>
+                </IconButton>
+                <Popper
+                  open={open}
+                  anchorEl={anchorRef.current}
+                  role={undefined}
+                  placement="bottom"
+                  transition
+                  disablePortal
+                >
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin:
+                          placement === "bottom-start"
+                            ? "left top"
+                            : "left bottom",
+                      }}
+                    >
+                      <Paper sx={{ marginTop: 1 }}>
+                        <Box borderBottom={1}>
+                          <Typography textAlign="center">
+                            {" "}
+                            {user.name}{" "}
+                          </Typography>
+                        </Box>
+
+                        <ClickAwayListener onClickAway={handleClose}>
+                          <MenuList
+                            autoFocusItem={open}
+                            id="composition-menu"
+                            aria-labelledby="composition-button"
+                            onKeyDown={handleListKeyDown}
+                          >
+                            {menu.map((item) => {
+                              return (
+                                <MenuItem
+                                  key={item.state}
+                                  onClick={() => {
+                                    item.action();
+                                  }}
+                                >
+                                  <Typography variant="subtitle2">
+                                    {item.state}
+                                  </Typography>
+                                </MenuItem>
+                              );
+                            })}
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </Box>
+            </>
+          )}
         </Toolbar>
       </AppBar>
+
       <Outlet />
       <footer>
         <Paper sx={{ marginTop: 10, paddingBottom: 10, paddingTop: 6 }}>

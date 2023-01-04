@@ -23,9 +23,12 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
 - Sort products by price and title.
 - Update/delete products. 
 - User login/logout and register.
+- Update User profile.
 - Add product to cart and remove product from cart.
 - Includes feature to switch between dark/light themes.
 - Testing unit for the reducers.
+- Responsive for small display (designed for both laptop and mobile display (400 x 600)).
+
 
 ## Website Pages
 
@@ -37,6 +40,7 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
 - `/createproduct`: allow any user to create a new product "even Guest users for now".
 - `/profile`: view user profile. This route can only be accessed when user is logged in.
 - `/*`: Not found page
+
 
 ## Structure
 
@@ -58,6 +62,9 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
     │   App.tsx
     │   index.tsx
     │   react-app-env.d.ts
+    │
+    ├───features
+    │       drawerComp.tsx
     │
     ├───Images
     │       black-wallpaper.jpg
@@ -106,7 +113,7 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
     │
     ├───routes
     │       routes.tsx
-    │
+    │       
     ├───Styles
     │       app.scss
     │
@@ -133,4 +140,4 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
 
 ## Deloyed Link
 
-[https://frontend-project-zeta.vercel.app/](https://frontend-project-zeta.vercel.app/)
+[https://frontend-project-bessawy.vercel.app ](https://frontend-project-bessawy.vercel.app)

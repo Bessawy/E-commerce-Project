@@ -45,7 +45,7 @@ describe("Test user actions", () => {
     expect(customStore.getState().userReducer.id).toBe(1);
   });
 
-  test("should create User",async () => {
+  test("should not login when creating account",async () => {
     const newUser: CreateUserType = {
         name: "Alaa",
         email: "alaa@mail.com",
@@ -53,7 +53,7 @@ describe("Test user actions", () => {
         avatar: new URL(newUserAvatar)
     }
     await customStore.dispatch(createUser(newUser))
-    expect(customStore.getState().userReducer.name).toBe("Alaa")
+    expect(customStore.getState().userReducer.name).toBe("Guest")
 
-  })
+  });
 });

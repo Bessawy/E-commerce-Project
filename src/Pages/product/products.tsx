@@ -16,6 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Container } from "@mui/system";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import ProductItem from "./product";
 import { ProductListType, ProductType, SortType } from "../../Types/product";
@@ -26,7 +27,7 @@ import {
   scrollUp,
   sortOptions,
 } from "./product_utils";
-import { useLocation, useNavigate } from "react-router-dom";
+import { FlexBox } from "../../Themes/badgeTheme";
 
 const Products = () => {
   const products: ProductType[] = useAppSelector(
@@ -53,11 +54,14 @@ const Products = () => {
       item.title.toLowerCase().includes(search.toLowerCase())
     );
 
-    if(sortTitle === 'asc'){
-      productSearch = productSearch.sort((a, b) => a.title.localeCompare(b.title));
-    }
-    else if(sortTitle === 'desc'){
-      productSearch = productSearch.sort((a, b) => b.title.localeCompare(a.title));
+    if (sortTitle === "asc") {
+      productSearch = productSearch.sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+    } else if (sortTitle === "desc") {
+      productSearch = productSearch.sort((a, b) =>
+        b.title.localeCompare(a.title)
+      );
     }
 
     if (sort === "Lowest") {
@@ -83,67 +87,69 @@ const Products = () => {
 
   return (
     <Container sx={{ marginTop: 15 }}>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "baseline",
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="products__sort-price"
-          select
-          size="small"
-          style={{ width: 120 }}
-          label="Sort"
-          defaultValue="None"
-          helperText="Sort by price"
-          onChange={(e) => setSort(e.target.value as SortType)}
+        <Box
+          component="form"
+          sx={{
+            "& .MuiTextField-root": { m: 1, maxWidth: "25ch" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "baseline",
+          }}
+          noValidate
+          autoComplete="off"
         >
-          {sortOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.value}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="products__sort-title"
-          select
-          size="small"
-          style={{ width: 120 }}
-          label="SortTitle"
-          value= {sortTitle}
-          helperText="Sort by title"
-          onChange={(e) =>
-            setSortTittle(e.target.value as "asc" | "desc" | "none")
-          }
-        >
-          {["asc", "desc", "none"].map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="products__select-category"
-          select
-          size="small"
-          label="Category"
-          defaultValue="All"
-          helperText="Filter products"
-          style={{ width: 160 }}
-          onChange={(e) => setList(e.target.value as ProductListType)}
-        >
-          {productOptions.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.value}
-            </MenuItem>
-          ))}
-        </TextField>
+          <TextField
+            id="products__sort-price"
+            select
+            size="small"
+            style={{ width: 120 }}
+            label="Sort"
+            defaultValue="None"
+            helperText="Sort by price"
+            onChange={(e) => setSort(e.target.value as SortType)}
+          >
+            {sortOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="products__sort-title"
+            select
+            size="small"
+            style={{ width: 120 }}
+            label="SortTitle"
+            value={sortTitle}
+            helperText="Sort by title"
+            onChange={(e) =>
+              setSortTittle(e.target.value as "asc" | "desc" | "none")
+            }
+          >
+            {["asc", "desc", "none"].map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="products__select-category"
+            select
+            size="small"
+            label="Category"
+            defaultValue="All"
+            helperText="Filter products"
+            style={{ width: 160 }}
+            onChange={(e) => setList(e.target.value as ProductListType)}
+          >
+            {productOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+        <FlexBox>
         <Paper
           sx={{
             p: "0px 4px",
@@ -171,9 +177,9 @@ const Products = () => {
             <SearchIcon />
           </IconButton>
         </Paper>
-      </Box>
+      </FlexBox>
 
-      <Grid container spacing={3} m={2} p={2}>
+      <Grid container spacing={3} justifyContent="center" marginTop={2} marginBottom={3}>
         {productList
           .slice((currentPage - 1) * 9, (currentPage - 1) * 9 + 9)
           .map((item) => {

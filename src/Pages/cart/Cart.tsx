@@ -25,14 +25,14 @@ const Cart = () => {
         return (
           <Box key={item.id} margin={5}>
             <Grid container spacing={3}>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <Box
                   component="img"
                   src={item.images[0]}
                   sx={{ width: "100%", height: "100%" }}
                 ></Box>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={12} md={9}>
                 <GridItem sx={{ height: "70%" }}>
                   <Typography variant="h6"> {item.title} </Typography>
                   <Divider sx={{ margin: 1 }} />
@@ -80,14 +80,14 @@ const Cart = () => {
                 <GridItem sx={{ height: "30%" }}>
                   <Typography>
                     Total Price:
-                    <Typography
+                    </Typography>
+                       <Typography
                       variant="inherit"
                       sx={{ fontSize: 16, fontWeight: 700 }}
                       color="secondary"
                     >
                       {item.price * item.count}{" "}
                       <EuroIcon sx={{ fontSize: 12 }} />
-                    </Typography>
                   </Typography>
                 </GridItem>
               </Grid>

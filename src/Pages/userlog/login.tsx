@@ -61,7 +61,7 @@ const UserForm = () => {
         {" "}
         <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
       </NavLink>
-      <Paper sx={{ marginTop: 5, width: 500 }} component="form">
+      <Paper sx={{ marginTop: 5, maxWidth: 500}} component="form">
         <Typography variant="h5" sx={{ marginTop: 3, marginLeft: 5 }}>
           {" "}
           Sign In
@@ -72,7 +72,7 @@ const UserForm = () => {
           Enter your email address
         </Typography>
         <TextField
-          sx={{ marginLeft: 5, marginTop: 1, width: 400 }}
+          sx={{ marginLeft: 5, marginTop: 1, minWidth: 300 }}
           required
           type="email"
           placeholder="useremail@example.com"
@@ -85,7 +85,7 @@ const UserForm = () => {
           Enter your password
         </Typography>
         <TextField
-          sx={{ marginLeft: 5, marginTop: 1, width: 400 }}
+          sx={{ marginLeft: 5, marginTop: 1, minWidth: 300 }}
           required
           label="Password"
           type="password"
@@ -100,7 +100,7 @@ const UserForm = () => {
             display: "flex",
             flexDirection: "column",
             marginTop: 7,
-            marginBottom: 5,
+            marginBottom: 2,
           }}
         >
           <LoadingButton
@@ -112,7 +112,7 @@ const UserForm = () => {
           >
             Continue
           </LoadingButton>
-          <Typography variant="caption" marginTop={2} color="#FF5F1F">
+          <Typography variant="caption" margin={2} color="#FF5F1F" whiteSpace={'normal'} textAlign={"center"} >
             {" "}
             By continuing, I agree to Amr’s Privacy Policy and Terms of Use.
           </Typography>
