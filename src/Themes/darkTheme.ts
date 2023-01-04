@@ -1,14 +1,11 @@
-import { red } from "@mui/material/colors";
-import blue from "@mui/material/colors/blue";
-import createTheme from "@mui/material/styles/createTheme";
-import { height } from "@mui/system";
+import { createTheme } from "@mui/material/styles";
+
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     pages: true;
   }
 }
-
 
 export const darkTheme = createTheme({
     palette: {

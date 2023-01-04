@@ -1,19 +1,20 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Box,
   Button,
   Divider,
-  Grid,
   Paper,
   Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { createUser } from "../../redux/reducers/userReducer";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
+import { FlexBox } from "../../Themes/badgeTheme";
 import { newUserAvatar } from "../utils";
 
 const UserForm = () => {
@@ -23,15 +24,18 @@ const UserForm = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [msgStatus, setmsgStatus] = useState<"error" | "success">("success");
+  const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userReducer);
 
   const createAccount = () => {
+    setloading(true);
     if (password.length < 5) {
       setMessage("Password is too short!");
       setmsgStatus("error");
       setOpen(true);
+      setloading(false);
     } else {
       dispatch(
         createUser({
@@ -46,6 +50,8 @@ const UserForm = () => {
           setmsgStatus("error");
           setOpen(true);
         }
+        navigate("/signin");
+        setloading(false);
       });
     }
   };
@@ -54,7 +60,7 @@ const UserForm = () => {
     if (user.name !== "Guest") {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <Box
@@ -63,89 +69,77 @@ const UserForm = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 3,
+        marginTop: 1,
       }}
     >
-      <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
-      <Paper sx={{ marginTop: 5, width: 500 }} component="form">
-        <Typography variant="h5" sx={{ marginTop: 3, marginLeft: 5 }}>
+      <NavLink to="/">
+        {" "}
+        <Box className="logo_img" sx={{ width: 220, height: 50 }}></Box>
+      </NavLink>
+      <Paper sx={{ marginTop: 3, p: 2 }} component="form">
+        <Typography variant="h5" sx={{ marginTop: 3 }} textAlign={"center"}>
           {" "}
           Create new account
         </Typography>
         <Divider sx={{ margin: 1 }} />
-        <Grid container>
-          <Grid item xs={6}>
-            <Typography
-              variant="subtitle2"
-              sx={{ marginTop: 2, marginLeft: 5 }}
-            >
-              {" "}
-              First name
-            </Typography>
-            <TextField
-              sx={{ marginLeft: 5, marginTop: 1, width: 190 }}
-              required
-              type="name"
-              variant="outlined"
-              onChange={(e) => setName(e.target.value)}
-            ></TextField>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="subtitle2" sx={{ marginTop: 2 }}>
-              {" "}
-              Family name
-            </Typography>
-            <TextField
-              sx={{ marginTop: 1, width: 190 }}
-              type="name"
-              variant="outlined"
-            ></TextField>
-          </Grid>
-        </Grid>
+        <FlexBox sx={{ flexDirection: "column" }}>
+          <Typography variant="subtitle2"  sx={{ m: "auto", marginTop: 2 }}>
+            {" "}
+            Name
+          </Typography>
+          <TextField
+            sx={{ marginTop: 1, minWidth: 300  }}
+            required
+            type="name"
+            variant="outlined"
+            onChange={(e) => setName(e.target.value)}
+          ></TextField>
+          <Typography variant="subtitle2" sx={{ m: "auto", marginTop: 2 }}>
+            {" "}
+            Enter your email address
+          </Typography>
+          <TextField
+            sx={{ marginTop: 1, minWidth: 300 }}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="user@mail.com"
+            autoComplete="off"
+            variant="outlined"
+          ></TextField>
+          <Typography variant="subtitle2" sx={{ marginTop: 2 }}>
+            {" "}
+            Enter your password
+          </Typography>
+          <TextField
+            sx={{ marginTop: 1, minWidth: 300 }}
+            required
+            label="Password"
+            type="password"
+            autoComplete="new-password"
+            onChange={(e) => setPassword(e.target.value)}
+            variant="filled"
+          ></TextField>
+        </FlexBox>
 
-        <Typography variant="subtitle2" sx={{ marginTop: 2, marginLeft: 5 }}>
-          {" "}
-          Enter your email address
-        </Typography>
-        <TextField
-          sx={{ marginLeft: 5, marginTop: 1, width: 400 }}
-          required
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          placeholder="user@mail.com"
-          autoComplete="off"
-          variant="outlined"
-        ></TextField>
-        <Typography variant="subtitle2" sx={{ marginTop: 2, marginLeft: 5 }}>
-          {" "}
-          Enter your password
-        </Typography>
-        <TextField
-          sx={{ marginLeft: 5, marginTop: 1, width: 400 }}
-          required
-          label="Password"
-          type="password"
-          autoComplete="new-password"
-          onChange={(e) => setPassword(e.target.value)}
-          variant="filled"
-        ></TextField>
         <Box
           sx={{
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
             flexDirection: "column",
-            marginTop: 5,
-            marginBottom: 5,
+            marginTop: 3,
+            marginBottom: 2,
           }}
         >
-          <Button
+          <LoadingButton
             variant="contained"
+            loading={loading}
             type="submit"
             onClick={() => createAccount()}
           >
             Create Account
-          </Button>
+          </LoadingButton>
           <Typography variant="caption" marginTop={2} color="#FF5F1F">
             {" "}
             By continuing, I agree to Amr’s Privacy Policy and Terms of Use.
@@ -169,6 +163,7 @@ const UserForm = () => {
             variant="contained"
             sx={{ margin: 1, width: 100 }}
             onClick={() => navigate("/signin")}
+            disabled={loading}
           >
             Sign in
           </Button>

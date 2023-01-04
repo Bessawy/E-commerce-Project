@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addProductServer } from "../../redux/reducers/productReducer";
 import { useAppDispatch } from "../../reduxhook/hooks";
+import { FlexBox } from "../../Themes/badgeTheme";
 import GridItem from "../../Themes/gridTheme";
 import { CreateCategoryType, ProductCreateType } from "../../Types/product";
 import { categoryOptions, createproductOptions } from "./product_utils";
@@ -49,7 +50,7 @@ const Createproduct = () => {
   };
 
   return (
-    <Box sx={{ m: 15 }}>
+    <FlexBox mt={20}>
       <Paper component="form">
         <TextField
           variant="standard"
@@ -130,7 +131,7 @@ const Createproduct = () => {
           {message}
         </Alert>
       </Snackbar>
-    </Box>
+    </FlexBox>
   );
 };
 

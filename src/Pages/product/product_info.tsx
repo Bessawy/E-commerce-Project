@@ -54,7 +54,7 @@ const ProductInfo = () => {
   return (
     <Box marginTop={20} marginLeft={4} marginRight={4}>
       <Grid container spacing={2}>
-        <Grid item xs={5} sx={{ width: "100%", height: "100%" }}>
+        <Grid item xs={12} md={5} sx={{ width: "100%", height: "100%" }}>
           <Swiper
             modules={[EffectCube, Navigation, Pagination]}
             navigation={true}
@@ -77,7 +77,7 @@ const ProductInfo = () => {
             })}
           </Swiper>
         </Grid>
-        <Grid item xs={7} sx={{ width: "100%", height: "100%" }}>
+        <Grid item xs={12} md={7} sx={{ width: "100%", height: "100%" }}>
           <GridItem>
             <Typography variant="h6">{product.title}</Typography>
           </GridItem>
