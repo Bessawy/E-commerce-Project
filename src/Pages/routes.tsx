@@ -69,11 +69,15 @@ export const Routes = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const updateCartLocaleStorage =async () => {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    }
     let count = 0;
     cart.forEach((item) => {
       count += item.count;
     });
     setCartItems(count);
+    updateCartLocaleStorage();
   }, [cart]);
 
   useEffect(() => {

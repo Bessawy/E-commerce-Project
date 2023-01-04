@@ -9,8 +9,10 @@ import ProductInfo from "../Pages/product/product_info";
 import { Routes } from "../Pages/routes";
 import Login from "../Pages/userlog/login";
 import Profile from "../Pages/userlog/profilePage";
-import ProtectRoutes from "../Pages/userlog/protectedroutes";
+import ProtectAdmin from "../Pages/userlog/protectedAdmin";
+import ProtectLogin from "../Pages/userlog/protectedLogin";
 import Register from "../Pages/userlog/register";
+import Users from "../Pages/userlog/Users";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
         element: <ProductInfo />,
       },
       {
+        path: "users",
+        element: (
+          <ProtectAdmin>
+            <Users />
+          </ProtectAdmin>
+        ),
+      },
+      {
         path: "cart",
         element: <Cart />,
       },
@@ -40,15 +50,16 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: (
-          <ProtectRoutes>
+          <ProtectLogin>
             <Profile />
-          </ProtectRoutes>
+          </ProtectLogin>
         ),
       },
       {
         path: "*",
         element: <Notfound />,
       },
+      {},
     ],
   },
   {

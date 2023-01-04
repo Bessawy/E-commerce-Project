@@ -7,13 +7,13 @@ type propsType = {
   children?: ReactElement<any|any>
 }
 
-const ProtectRoutes = (props: propsType) => {
+const ProtectAdmin = (props: propsType) => {
   const user = useAppSelector((state) => state.userReducer);
-  if(!user.id)
+  if(user.role !== "admin")
   {
-    return <Navigate to='/signin'/>
+    return <Navigate to='/'/>
   }
-  return props.children ? props.children : <Navigate to='/signin'/>
+  return props.children ? props.children : <Navigate to='/'/>
 };
 
-export default ProtectRoutes;
+export default ProtectAdmin;

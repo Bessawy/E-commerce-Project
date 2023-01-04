@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const modeState: string = 'light'
+const modeState: string = localStorage.getItem('theme') || 'dark'
 document.body.className = "body-"+ modeState
 
 const themeSlice = createSlice({

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { CartType, ProductType } from "../../Types/product";
 
-const initalstate: CartType[] = [];
+const initalstate: CartType[] = JSON.parse(localStorage.getItem('cart') || '[]');
 
 const cartSlice = createSlice({
   name: "cartSlice",

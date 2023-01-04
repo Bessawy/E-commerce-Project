@@ -17,6 +17,13 @@ function App() {
 
   const dispatch = useAppDispatch();
 
+  useEffect(()=>{
+    const themeLocalStorage = async () => {
+      localStorage.setItem('theme', mode)
+    }
+    themeLocalStorage()
+  }, [mode])
+
   useEffect(() => {
     dispatch(fetchAllProduct());
   }, [dispatch]);

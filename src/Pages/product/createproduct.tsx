@@ -1,7 +1,7 @@
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Alert,
   Box,
-  Button,
   MenuItem,
   Paper,
   Snackbar,
@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addProductServer } from "../../redux/reducers/productReducer";
 import { useAppDispatch } from "../../reduxhook/hooks";
+
 import { FlexBox } from "../../Themes/badgeTheme";
 import GridItem from "../../Themes/gridTheme";
 import { CreateCategoryType, ProductCreateType } from "../../Types/product";
@@ -23,11 +24,13 @@ const Createproduct = () => {
   const [category, setCategory] = useState<CreateCategoryType>("Clothes");
   const [urls, setUrls] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const createProductHandler = () => {
+    setLoading(true)
     const images = urls.trim().split(/\s+/);
     const categoryObj = categoryOptions.find((item) => item.value === category);
     const categoryId = categoryObj ? categoryObj.id : 1;
@@ -40,6 +43,7 @@ const Createproduct = () => {
     };
 
     dispatch(addProductServer(createProduct)).then((data) => {
+      setLoading(false)
       if ("error" in data) {
         setMessage("Failed to create Product (Invalid Data)");
         setOpen(true);
@@ -107,14 +111,15 @@ const Createproduct = () => {
           ></TextField>
         </Box>
         <GridItem>
-          <Button
+          <LoadingButton
+            loading={loading}
             variant="contained"
             sx={{ m: 3 }}
             onClick={() => createProductHandler()}
           >
             {" "}
             Create Product{" "}
-          </Button>
+          </LoadingButton>
         </GridItem>
       </Paper>
 
