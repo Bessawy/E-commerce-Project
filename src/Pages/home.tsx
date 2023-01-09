@@ -27,7 +27,7 @@ import "swiper/css/navigation";
 
 import { useAppSelector } from "../reduxhook/hooks";
 import { ProductType } from "../Types/product";
-import ProductItem from "./product/product";
+import ProductItem from "./product/Product";
 import { FlexBox } from "../Themes/badgeTheme";
 
 const images = [

@@ -18,7 +18,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import ProductItem from "./product";
+import ProductItem from "./Product";
 import { ProductListType, ProductType, SortType } from "../../Types/product";
 import {
   getCategoryId,

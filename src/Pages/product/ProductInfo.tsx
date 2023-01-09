@@ -22,7 +22,7 @@ import { ProductType, ProductUpdateType } from "../../Types/product";
 import GridItem from "../../Themes/gridTheme";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 import { addtoCart } from "../../redux/reducers/cartReducer";
-import ProductForm from "./productEditForm";
+import ProductForm from "./ProductEditForm";
 import {
   deleteItemServer,
   updateItemServer,
