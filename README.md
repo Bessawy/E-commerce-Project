@@ -10,8 +10,10 @@
 - About
 - Features
 - Website Pages
-- Structure
 - Deployed Website Link
+- Steps to run the code
+- ScreenShots
+- Structure
 
 ## About
 
@@ -41,6 +43,30 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
 - `/profile`: view user profile. This route can only be accessed when user is logged in.
 - `/*`: Not found page
 
+## Deloyed Link
+
+[https://frontend-project-bessawy.vercel.app ](https://frontend-project-bessawy.vercel.app)
+
+## Steps to run the Code
+
+- Clone the repository to your local machine.
+- install dependencies: `npm install`
+- run the test scripts: `yarn test`
+- run the project: `yarn start`
+
+## Screen-shots 
+
+![](/screenshots/home1.PNG)
+![](/screenshots/home2.PNG)
+![](/screenshots/product.PNG)
+![](/screenshots/product2.PNG)
+![](/screenshots/productinfo.PNG)
+![](/screenshots/createproduct.PNG)
+![](/screenshots/signin.PNG)
+![](/screenshots/signup.PNG)
+![](/screenshots/userprofile.PNG)
+![](/screenshots/smalldisplay.PNG)
+![](/screenshots/display2.PNG)
 
 ## Structure
 
@@ -138,6 +164,3 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
             user.ts
 ```
 
-## Deloyed Link
-
-[https://frontend-project-bessawy.vercel.app ](https://frontend-project-bessawy.vercel.app)
