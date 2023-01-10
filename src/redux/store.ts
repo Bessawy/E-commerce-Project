@@ -11,7 +11,20 @@ export const createStore = () => {
   });
 }
 
+const saveState = (state: RootState) => {
+  try {
+      const cartReducer = JSON.stringify(state.cartReducer)
+      const themeReducer = state.themeReducer
+      localStorage.setItem('cart', cartReducer)
+      localStorage.setItem('theme', themeReducer)
+  } catch (e) {
+    throw new Error('couldnot persist state')
+  }
+}
+
 export const store = createStore()
+store.subscribe(()=>saveState(store.getState()))
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
