@@ -3,22 +3,15 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 
 import { newUserAvatar } from "../../Pages/utils";
 import { createUser, UserLogin } from "../../redux/reducers/userReducer";
-import { createStore } from "../../redux/store";
-import { CartType } from "../../Types/product";
-import { CreateUserType, UserType } from "../../Types/user";
+import { createStore, RootState } from "../../redux/store";
+import { CreateUserType} from "../../Types/user";
 import server from "../shared/server";
 
-let customStore: ToolkitStore<{
-  productReducer: any;
-  themeReducer: string;
-  userReducer: UserType;
-  cartReducer: CartType[];
-}, AnyAction, [ThunkMiddleware<{
-  productReducer: any;
-  themeReducer: string;
-  userReducer: UserType;
-  cartReducer: CartType[];
-}, AnyAction, undefined>]>;
+let customStore: ToolkitStore<
+  RootState,
+  AnyAction,
+  [ThunkMiddleware<RootState, AnyAction, undefined>]
+>;
 
 beforeAll(() => {
   server.listen();
@@ -32,7 +25,6 @@ beforeEach(() => {
   customStore = createStore();
 });
 
-
 describe("Test user actions", () => {
   test("should be the initial state", async () => {
     expect(customStore.getState().userReducer.id).toBe(0);
@@ -45,15 +37,14 @@ describe("Test user actions", () => {
     expect(customStore.getState().userReducer.id).toBe(1);
   });
 
-  test("should not login when creating account",async () => {
+  test("should not login when creating account", async () => {
     const newUser: CreateUserType = {
-        name: "Alaa",
-        email: "alaa@mail.com",
-        password: "12345",
-        avatar: new URL(newUserAvatar)
-    }
-    await customStore.dispatch(createUser(newUser))
-    expect(customStore.getState().userReducer.name).toBe("Guest")
-
+      name: "Alaa",
+      email: "alaa@mail.com",
+      password: "12345",
+      avatar: new URL(newUserAvatar),
+    };
+    await customStore.dispatch(createUser(newUser));
+    expect(customStore.getState().userReducer.name).toBe("Guest");
   });
 });

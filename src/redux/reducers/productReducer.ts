@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 
 import {
-  modifyProductType,
+  ModifyProductType,
   ProductCreateType,
   ProductType,
 } from "../../Types/product";
@@ -14,7 +14,7 @@ export const fetchAllProduct = createAsyncThunk("fetchProducts", async () => {
     const response = await axios.get(
       "https://api.escuelajs.co/api/v1/products"
     );
-    const data = await response.data;
+    const data: ProductType[]|Error = await response.data;
     return data;
   } catch (e: any) {
     throw new Error(e.message);
@@ -48,7 +48,8 @@ export const addProductServer = createAsyncThunk(
           categoryId: product.categoryId,
           images: product.images,
         });
-      return response.data;
+      const data: ProductType|Error = response.data;
+      return data;
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -67,7 +68,7 @@ export const updateItemServer = createAsyncThunk(
           description: Item.description,
         }
       );
-      const data = await response.data;
+      const data: ProductType = await response.data;
       dispatch(modifyItem({ update: data }));
       return data;
     } catch (e: any) {
@@ -105,7 +106,7 @@ const productSlice = createSlice({
     deleteItem: (state, action: PayloadAction<number>) => {
       return state.filter((item) => item.id !== action.payload);
     },
-    modifyItem: (state, action: PayloadAction<modifyProductType>) => {
+    modifyItem: (state, action: PayloadAction<ModifyProductType>) => {
       if (action.payload.index) {
         state[action.payload.index] = action.payload.update;
       } else {

@@ -13,7 +13,7 @@ export interface ProductType {
   images: string[];
 }
 
-export interface addProductType {
+export interface AddProductType {
   title: string;
   price: number;
   description: string;
@@ -21,7 +21,7 @@ export interface addProductType {
   images: string[];
 }
 
-export interface modifyProductType {
+export interface ModifyProductType {
   index?: number | undefined;
   update: ProductType;
 }

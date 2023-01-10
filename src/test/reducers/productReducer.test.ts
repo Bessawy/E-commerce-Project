@@ -7,22 +7,15 @@ import {
   fetchAllProduct,
   updateItemServer,
 } from "../../redux/reducers/productReducer";
-import { createStore } from "../../redux/store";
-import { CartType, ProductCreateType, ProductType } from "../../Types/product";
-import { UserType } from "../../Types/user";
+import { createStore, RootState } from "../../redux/store";
+import { ProductCreateType, ProductType } from "../../Types/product";
 import server from "../shared/server";
 
-let customStore: ToolkitStore<{
-  productReducer: any;
-  themeReducer: string;
-  userReducer: UserType;
-  cartReducer: CartType[];
-}, AnyAction, [ThunkMiddleware<{
-  productReducer: any;
-  themeReducer: string;
-  userReducer: UserType;
-  cartReducer: CartType[];
-}, AnyAction, undefined>]>;
+let customStore: ToolkitStore<
+  RootState,
+  AnyAction,
+  [ThunkMiddleware<RootState, AnyAction, undefined>]
+>;
 
 beforeAll(() => {
   server.listen();
@@ -109,108 +102,106 @@ describe("Test products actions", () => {
   test("should change an existing item", async () => {
     await customStore.dispatch(fetchAllProduct());
     const editedProduct: ProductType = {
-        id: 2,
-        title: "New title",
-        price: 5000,
-        description:
-          " New description ",
-        images: [
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
-        ],
-        category: {
-          id: 4,
-          name: "Shoes",
-          image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
-        },
+      id: 2,
+      title: "New title",
+      price: 5000,
+      description: " New description ",
+      images: [
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
+      ],
+      category: {
+        id: 4,
+        name: "Shoes",
+        image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
+      },
     };
     await customStore.dispatch(updateItemServer(editedProduct));
-    const editedVersion = {...customStore.getState().productReducer[0]}
-    expect(editedVersion.title === editedProduct.title &&
+    const editedVersion = { ...customStore.getState().productReducer[0] };
+    expect(
+      editedVersion.title === editedProduct.title &&
         editedVersion.description === editedProduct.description &&
-        editedVersion.price === editedProduct.price)
-
+        editedVersion.price === editedProduct.price
+    );
   });
 
-  test("should not change an existing item with no title",async () => {
+  test("should not change an existing item with no title", async () => {
     await customStore.dispatch(fetchAllProduct());
     const editedProduct: ProductType = {
-        id: 2,
-        title: "",
-        price: 5000,
-        description:
-          " New description ",
-        images: [
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
-        ],
-        category: {
-          id: 4,
-          name: "Shoes",
-          image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
-        },
+      id: 2,
+      title: "",
+      price: 5000,
+      description: " New description ",
+      images: [
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
+      ],
+      category: {
+        id: 4,
+        name: "Shoes",
+        image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
+      },
     };
     await customStore.dispatch(updateItemServer(editedProduct));
-    const editedVersion = {...customStore.getState().productReducer[0]}
-    expect(editedVersion.title !== editedProduct.title &&
+    const editedVersion = { ...customStore.getState().productReducer[0] };
+    expect(
+      editedVersion.title !== editedProduct.title &&
         editedVersion.description !== editedProduct.description &&
-        editedVersion.price !== editedProduct.price)
+        editedVersion.price !== editedProduct.price
+    );
+  });
 
-  })
-
-  test("should not change an existing item with price less than 0",async () => {
+  test("should not change an existing item with price less than 0", async () => {
     await customStore.dispatch(fetchAllProduct());
     const editedProduct: ProductType = {
-        id: 2,
-        title: "New title",
-        price: -5000,
-        description:
-          " New description ",
-        images: [
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
-        ],
-        category: {
-          id: 4,
-          name: "Shoes",
-          image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
-        },
+      id: 2,
+      title: "New title",
+      price: -5000,
+      description: " New description ",
+      images: [
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
+      ],
+      category: {
+        id: 4,
+        name: "Shoes",
+        image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
+      },
     };
     await customStore.dispatch(updateItemServer(editedProduct));
-    const editedVersion = {...customStore.getState().productReducer[0]}
-    expect(editedVersion.title !== editedProduct.title &&
+    const editedVersion = { ...customStore.getState().productReducer[0] };
+    expect(
+      editedVersion.title !== editedProduct.title &&
         editedVersion.description !== editedProduct.description &&
-        editedVersion.price !== editedProduct.price)
-
-  })
+        editedVersion.price !== editedProduct.price
+    );
+  });
 
   test("should not change non existing item", async () => {
     await customStore.dispatch(fetchAllProduct());
     const products: ProductType[] = customStore.getState().productReducer;
     const editedProduct: ProductType = {
-        id: 100,
-        title: "New title",
-        price: 5000,
-        description:
-          " New description ",
-        images: [
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
-          "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
-        ],
-        category: {
-          id: 4,
-          name: "Shoes",
-          image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
-        },
+      id: 100,
+      title: "New title",
+      price: 5000,
+      description: " New description ",
+      images: [
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=2497",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=5307",
+        "https://api.lorem.space/image/shoes?w=640&h=480&r=4464",
+      ],
+      category: {
+        id: 4,
+        name: "Shoes",
+        image: "https://api.lorem.space/image/shoes?w=640&h=480&r=5514",
+      },
     };
     await customStore.dispatch(updateItemServer(editedProduct));
-    const indicator = products.find((item)=> item.title === "New title")
-    expect(indicator).toBe(undefined)
-
+    const indicator = products.find((item) => item.title === "New title");
+    expect(indicator).toBe(undefined);
   });
 });
 

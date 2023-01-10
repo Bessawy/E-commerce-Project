@@ -24,6 +24,9 @@ const cartSlice = createSlice({
         state.splice(action.payload, 1);
       }
     },
+    deleteFromCart: (state, action: PayloadAction<number>) =>{
+      state.splice(action.payload, 1);
+    }
   },
 });
 

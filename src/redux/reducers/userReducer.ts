@@ -24,7 +24,8 @@ export const editUserServer = createAsyncThunk(
           name: user.name,
         }
       );
-      return response.data;
+      const data: UserType = response.data;
+      return data
     } catch (e) {
       throw new Error("Couldnot edit user");
     }
@@ -39,7 +40,8 @@ export const createUser = createAsyncThunk(
         "https://api.escuelajs.co/api/v1/users/",
         user
       );
-      return response.data;
+      const data: UserType|Error = response.data;
+      return data;
     } catch (e) {
       throw new Error("Cannot add new user");
     }
@@ -62,7 +64,7 @@ export const JWTLogin = createAsyncThunk("tokenLogin", async () => {
         },
       }
     );
-    const newUser = await userResponse.data;
+    const newUser: UserType = await userResponse.data;
     return newUser;
   } catch (e) {
     throw new Error("JWT Login failed!");
