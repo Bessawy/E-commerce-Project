@@ -12,7 +12,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
 
 import { ProductType } from "../../Types/product";
-import { Item } from "./product_utils";
+import { Item } from "../../utils/product_utils";
 import { useAppDispatch } from "../../reduxhook/hooks";
 import { addtoCart } from "../../redux/reducers/cartReducer";
 

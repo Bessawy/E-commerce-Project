@@ -26,8 +26,8 @@ import {
   productOptions,
   scrollUp,
   sortOptions,
-} from "./product_utils";
-import { FlexBox } from "../../Themes/badgeTheme";
+} from "../../utils/product_utils";
+import { FlexBox } from "../../Styles/Themes/styledComp";
 
 const Products = () => {
   const products: ProductType[] = useAppSelector(

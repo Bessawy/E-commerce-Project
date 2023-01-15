@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import EuroIcon from "@mui/icons-material/Euro";
@@ -19,7 +19,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { ProductType, ProductUpdateType } from "../../Types/product";
-import GridItem from "../../Themes/gridTheme";
+import GridItem from "../../Styles/Themes/gridTheme";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
 import { addtoCart } from "../../redux/reducers/cartReducer";
 import ProductForm from "./ProductEditForm";
@@ -32,10 +32,11 @@ const ProductInfo = () => {
   const stateObj = useLocation();
   const [product, setProduct] = useState<ProductType>(stateObj.state);
   const [deleteExp, setDeleteExp] = React.useState<true | false>(false);
-  const [expanded, setExpanded] = React.useState<true | false>(false);
+  const [editExp, seteditExp] = React.useState<true | false>(false);
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
 
   const deleteProduct = () => {
     dispatch(deleteItemServer(product.id));
@@ -49,7 +50,17 @@ const ProductInfo = () => {
     newProduct.description = newItem.description;
     setProduct(newProduct);
     dispatch(updateItemServer(newProduct));
+    seteditExp(false);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <Box marginTop={20} marginLeft={4} marginRight={4}>
@@ -61,6 +72,7 @@ const ProductInfo = () => {
             pagination={{ clickable: true }}
             grabCursor={true}
             effect="cube"
+
             centeredSlides
           >
             {product.images.map((item, index) => {
@@ -132,7 +144,7 @@ const ProductInfo = () => {
 
       {user.role === "admin" && (
         <Box sx={{ marginTop: 8 }}>
-          <Accordion expanded={expanded}>
+          <Accordion expanded={editExp}>
             <AccordionSummary
               aria-controls="panel1bh-content"
               id="panel1bh-header"
@@ -145,7 +157,7 @@ const ProductInfo = () => {
               </Typography>
               <Button
                 onClick={() =>
-                  expanded ? setExpanded(false) : setExpanded(true)
+                  editExp ? seteditExp(false) : seteditExp(true)
                 }
                 sx={{ marginLeft: "auto" }}
               >

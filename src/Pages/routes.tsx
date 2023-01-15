@@ -26,8 +26,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { navMenuType } from "../Types/routes";
 import { JWTLogin, signOutUser } from "../redux/reducers/userReducer";
-import { StyledBadge } from "../Themes/badgeTheme";
-import DrawerComp from "../features/drawerComp";
+import { FlexBox, StyledBadge } from "../Styles/Themes/styledComp";
+import DrawerComp from "../features/drawer/drawerComp";
 
 export const Routes = () => {
   const mode = useAppSelector((state) => state.themeReducer) as
@@ -201,13 +201,7 @@ export const Routes = () => {
                 </Badge>
               </IconButton>
 
-              <Box
-                sx={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
+              <FlexBox>
                 <IconButton
                   ref={anchorRef}
                   id="composition-button"
@@ -288,13 +282,14 @@ export const Routes = () => {
                     </Grow>
                   )}
                 </Popper>
-              </Box>
+              </FlexBox>
             </>
           )}
         </Toolbar>
       </AppBar>
 
       <Outlet />
+      
       <footer>
         <Paper sx={{ marginTop: 10, paddingBottom: 10, paddingTop: 6 }}>
           <Container maxWidth="lg">

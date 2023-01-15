@@ -14,8 +14,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import { createUser } from "../../redux/reducers/userReducer";
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
-import { FlexBox } from "../../Themes/badgeTheme";
-import { newUserAvatar } from "../utils";
+import { FlexBox } from "../../Styles/Themes/styledComp";
+import { newUserAvatar } from "../../utils/utils";
 
 const UserForm = () => {
   const [email, setEmail] = useState<string>("");

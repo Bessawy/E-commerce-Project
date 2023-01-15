@@ -12,10 +12,10 @@ import { useNavigate } from "react-router-dom";
 import { addProductServer } from "../../redux/reducers/productReducer";
 import { useAppDispatch } from "../../reduxhook/hooks";
 
-import { FlexBox } from "../../Themes/badgeTheme";
-import GridItem from "../../Themes/gridTheme";
+import { FlexBox } from "../../Styles/Themes/styledComp";
+import GridItem from "../../Styles/Themes/gridTheme";
 import { CreateCategoryType, ProductCreateType } from "../../Types/product";
-import { categoryOptions, createproductOptions } from "./product_utils";
+import { categoryOptions, createproductOptions } from "../../utils/product_utils";
 
 const Createproduct = () => {
   const [title, setTitle] = useState<string>("");

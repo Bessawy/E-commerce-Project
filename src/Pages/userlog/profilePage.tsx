@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { useAppDispatch, useAppSelector } from "../../reduxhook/hooks";
-import GridItem from "../../Themes/gridTheme";
+import GridItem from "../../Styles/Themes/gridTheme";
 import { editUserServer } from "../../redux/reducers/userReducer";
 import { UserType } from "../../Types/user";
 

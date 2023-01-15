@@ -6,8 +6,8 @@ import "./Styles/app.scss";
 
 import { useAppDispatch, useAppSelector } from "./reduxhook/hooks";
 import { fetchAllProduct } from "./redux/reducers/productReducer";
-import { darkTheme } from "./Themes/darkTheme";
-import { lightTheme } from "./Themes/lightTheme";
+import { darkTheme } from "./Styles/Themes/darkTheme";
+import { lightTheme } from "./Styles/Themes/lightTheme";
 import router from "./routes/routes";
 
 function App() {

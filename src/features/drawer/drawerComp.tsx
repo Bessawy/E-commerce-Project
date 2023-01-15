@@ -14,8 +14,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import InventoryIcon from "@mui/icons-material/Inventory";
 
-import { navMenuType } from "../Types/routes";
-import { FlexBox } from "../Themes/badgeTheme";
+import { navMenuType } from "../../Types/routes";
+import { FlexBox } from "../../Styles/Themes/styledComp";
 
 const DrawerComp = (props: { menu: navMenuType[]; avatar: string }) => {
   const [open, setOpen] = useState(false);

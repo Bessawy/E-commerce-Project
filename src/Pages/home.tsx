@@ -28,7 +28,7 @@ import "swiper/css/navigation";
 import { useAppSelector } from "../reduxhook/hooks";
 import { ProductType } from "../Types/product";
 import ProductItem from "./product/Product";
-import { FlexBox } from "../Themes/badgeTheme";
+import { FlexBox } from "../Styles/Themes/styledComp";
 
 const images = [
   "/clothes.jpg",
@@ -171,12 +171,12 @@ const Home = () => {
           })}
         </Swiper>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+      <FlexBox sx={{ marginTop: 2 }}>
         <Button variant="contained" onClick={() => navigate("/products")}>
           {" "}
           Search for more Product
         </Button>
-      </Box>
+      </FlexBox>
       <Divider sx={{ margin: 3 }} />
       <Box marginTop={3}>
         <Typography variant="h6" textAlign="center">
@@ -192,12 +192,9 @@ const Home = () => {
           </Typography>
           Subuscribe to our news
         </Typography>
-        <Box
+        <FlexBox
           component="form"
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             marginTop: 2,
           }}
         >
@@ -207,7 +204,7 @@ const Home = () => {
             placeholder="user@mail.com"
             sx={{ width: 400 }}
           ></TextField>
-        </Box>
+        </FlexBox>
       </Box>
     </Box>
   );

@@ -4,7 +4,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import IconButton from "@mui/material/IconButton";
 import CircleIcon from "@mui/icons-material/Circle";
-import ".//slider.scss";
+import "./slider.scss";
 
 interface SliderPropsType {
   slides: string[];
