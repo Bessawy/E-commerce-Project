@@ -15,7 +15,7 @@ import LaptopChromebookIcon from "@mui/icons-material/LaptopChromebook";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import IceSkatingOutlinedIcon from "@mui/icons-material/IceSkatingOutlined";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
+import { Autoplay, Navigation, Pagination } from "swiper";
 import Button from "@mui/material/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 import Typewriter from "react-ts-typewriter";
@@ -24,6 +24,7 @@ import "swiper/css/scrollbar";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/autoplay"
 
 import { useAppSelector } from "../reduxhook/hooks";
 import { ProductType } from "../Types/product";
@@ -58,7 +59,12 @@ const Home = () => {
 
   return (
     <Box>
-      <Swiper className="mySwiper">
+      <Swiper className="mySwiper" 
+      modules={[Pagination, Autoplay]}
+      slidesPerView={1}
+      autoplay={{delay: 5000}}
+      >
+
         {advertise.map((item, index) => {
           return (
             <SwiperSlide key={index}>
