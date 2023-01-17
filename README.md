@@ -31,6 +31,10 @@ Create an e-commerce website using [ https://fakeapi.platzi.com/ ]( https://fake
 - Testing unit for the reducers.
 - Responsive for small display (designed for both laptop and mobile display (400 x 600)).
 
+## Login in as admin
+
+`email`: admin@mail.com
+`password`: admin123
 
 ## Website Pages
 

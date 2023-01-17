@@ -121,6 +121,7 @@ const Home = () => {
               }}
               navigation={true}
               modules={[Pagination, Navigation]}
+              autoplay={{delay: 1000}}
               className="mySwiper"
             >
               {images.map((item, index) => {
